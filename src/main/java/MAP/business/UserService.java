@@ -5,9 +5,10 @@ import MAP.domain.Tuple;
 import MAP.domain.User;
 import MAP.repository.InMemoryRepository;
 import MAP.repository.Repository;
-import MAP.business.ServiceException;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 public class UserService{
 
@@ -91,22 +92,29 @@ public class UserService{
         return noConnectedComponents(friendships);
     }
 
-    public List<Long> getMostSocialCommunity() {
-        StringBuilder stringBuilder = new StringBuilder();
+    public List<String> getMostSocialCommunity() {
         ArrayList<Friendship> friendships = getFriendshipList();
-        return mostSocialCommunity(friendships);
+        return mostSocialCommunity(friendships)
+                .stream()
+                .map(id->repo.findOne(id).get().toString())
+                .collect(Collectors.toList());
     }
 
     private ArrayList<Friendship> getFriendshipList() {
         ArrayList<Friendship> friendships = new ArrayList<>();
+        repo.getAll().forEach(user-> user.getFriends().forEach(friend-> {
+            Friendship friendship = new Friendship();
+            friendship.setId(new Tuple<Long, Long>(user.getId(), friend));
+            friendships.add(friendship);
+        }));
 
-        for (User user : repo.getAll()) {
-            for (Long friend : user.getFriends()) {
-                Friendship friendship = new Friendship();
-                friendship.setId(new Tuple<Long, Long>(user.getId(), friend));
-                friendships.add(friendship);
-            }
-        }
+//        for (User user : repo.getAll()) {
+//            for (Long friend : user.getFriends()) {
+//                Friendship friendship = new Friendship();
+//                friendship.setId(new Tuple<Long, Long>(user.getId(), friend));
+//                friendships.add(friendship);
+//            }
+//        }
 
         return friendships;
     }
@@ -117,49 +125,62 @@ public class UserService{
         ArrayList<Long> longest = new ArrayList<>();
         Set<Long> visited = new HashSet<>();
 
-        for (Long node : graph.keySet()) {
+        graph.keySet().forEach(node->{
             if (!visited.contains(node)) {
                 dfs2(node, visited, graph, longest);
             }
-        }
+        });
+
+//        for (Long node : graph.keySet()) {
+//            if (!visited.contains(node)) {
+//                dfs2(node, visited, graph, longest);
+//            }
+//        }
 
         return longest;
     }
 
-    private static List<Long> mostSocialCommunity2(ArrayList<Friendship> friendships) {
-        Map<Long, ArrayList<Long>> graph = new HashMap<>();
-        createGraph(friendships, graph);
-        ArrayList<Long> largestComponent = new ArrayList<>();
-        ArrayList<Long> currentComponent = new ArrayList<>();
-        Set<Long> visited = new HashSet<>();
-
-        for (Long node : graph.keySet()) {
-            if (!visited.contains(node)) {
-                currentComponent.clear();
-                dfs2(node, visited, graph, largestComponent);
-                if (currentComponent.size() > largestComponent.size()) {
-                    largestComponent = new ArrayList<>(currentComponent);
-                }
-            }
-        }
-
-        return largestComponent;
-    }
+//    private static List<Long> mostSocialCommunity2(ArrayList<Friendship> friendships) {
+//        Map<Long, ArrayList<Long>> graph = new HashMap<>();
+//        createGraph(friendships, graph);
+//        ArrayList<Long> largestComponent = new ArrayList<>();
+//        ArrayList<Long> currentComponent = new ArrayList<>();
+//        Set<Long> visited = new HashSet<>();
+//
+//        for (Long node : graph.keySet()) {
+//            if (!visited.contains(node)) {
+//                currentComponent.clear();
+//                dfs2(node, visited, graph, largestComponent);
+//                if (currentComponent.size() > largestComponent.size()) {
+//                    largestComponent = new ArrayList<>(currentComponent);
+//                }
+//            }
+//        }
+//
+//        return largestComponent;
+//    }
 
     private static int noConnectedComponents(ArrayList<Friendship> friendships) {
         Map<Long, ArrayList<Long>> graph = new HashMap<>();
         createGraph(friendships, graph);
         Set<Long> visited = new HashSet<>();
-        int components = 0;
+        AtomicInteger components = new AtomicInteger();
         // Perform DFS to count connected components.
-        for (Long node : graph.keySet()) {
+        graph.keySet().forEach(node->{
             if (!visited.contains(node)) {
-                components++;
+                components.getAndIncrement();
                 dfs(node, visited, graph);
             }
-        }
+        });
 
-        return components;
+//        for (Long node : graph.keySet()) {
+//            if (!visited.contains(node)) {
+//                components.getAndIncrement();
+//                dfs(node, visited, graph);
+//            }
+//        }
+
+        return components.get();
     }
 
     private static void createGraph(ArrayList<Friendship> friendships, Map<Long, ArrayList<Long>> graph) {
@@ -187,6 +208,7 @@ public class UserService{
         visited.add(node);
 
         if (graph.containsKey(node)) {
+
             for (Long neighbor : graph.get(node)) {
                 if (!visited.contains(neighbor)) {
                     dfs(neighbor, visited, graph);
