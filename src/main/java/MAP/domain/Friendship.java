@@ -4,15 +4,19 @@ import java.time.LocalDateTime;
 
 import MAP.domain.User;
 
-public class Friendship extends Entity<Tuple<Long, Long>>{
+public class    Friendship extends Entity<Tuple<Long, Long>>{
 
-    LocalDateTime date;
+    LocalDateTime friendsFrom;
 
     public Friendship(){
-        date = LocalDateTime.now();
+        friendsFrom = LocalDateTime.now();
     }
 
-    public LocalDateTime getDate() {
-        return date;
+    public Friendship(LocalDateTime localDateTime) {
+        friendsFrom = localDateTime;
+    }
+
+    public LocalDateTime getFriendsFrom() {
+        return friendsFrom;
     }
 }

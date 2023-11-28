@@ -85,6 +85,22 @@ public class UI {
         }
     }
 
+    private void friendsFromMonth(){
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        try{
+            System.out.print("The first name of the user: ");
+            String firstName = reader.readLine();
+            System.out.print("The last name of the user: ");
+            String lastName = reader.readLine();
+            System.out.print("The month: ");
+            String month = reader.readLine();
+            service.friendsFromAMonthOfTheYear(firstName, lastName, month).forEach(System.out::println);
+        }
+        catch(IOException | ValidationException | IllegalArgumentException | ServiceException e){
+            System.out.println("Error reading input: \n" + e.getMessage());
+        }
+    }
+
     private void nrComunities(){
         System.out.println(service.getNumberOfCommunities());
     }
@@ -94,7 +110,7 @@ public class UI {
     }
     public void run(){
         while(true) {
-            System.out.println("1. Save user\n2. Delete user\n3. Save friendship\n4. Delete friendship\n5. Number of comunities\n6. Most social comunity\n0. Exit");
+            System.out.println("1. Save user\n2. Delete user\n3. Save friendship\n4. Delete friendship\n5. Number of comunities\n6. Most social comunity\n7. Friends from a month\n0. Exit");
             System.out.println("Command:");
             Scanner in = new Scanner(System.in);
             int command = Integer.parseInt(in.nextLine());
@@ -117,6 +133,8 @@ public class UI {
                 case 6:
                     mostSocialComunity();
                     break;
+                case 7:
+                    friendsFromMonth();
                 default:
                     break;
             }

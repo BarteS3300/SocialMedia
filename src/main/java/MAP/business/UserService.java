@@ -4,6 +4,7 @@ import MAP.domain.Friendship;
 import MAP.domain.Tuple;
 import MAP.domain.User;
 import MAP.repository.InMemoryRepository;
+import MAP.repository.UserDBRepository;
 import MAP.repository.Repository;
 
 import java.util.*;
@@ -12,9 +13,9 @@ import java.util.stream.Collectors;
 
 public class UserService{
 
-    private Repository<Long, User> repo;
+    private UserDBRepository repo;
 
-    public UserService(InMemoryRepository<Long, User> repo) {
+    public UserService(UserDBRepository repo) {
         this.repo = repo;
     }
 
@@ -55,14 +56,23 @@ public class UserService{
     }
 
     public void addFriendship(String firstName1, String lastName1, String firstName2, String lastName2) throws ServiceException{
-        User u1 = new User(firstName1, lastName1);
-        u1.setId((long) u1.hashCode());
-        User u2 = new User(firstName2, lastName2);
-        u2.setId((long) u2.hashCode());
+        Optional<User> u1 = Optional.empty();
+        Optional<User> u2 = Optional.empty();
+        for(User user : repo.getAll()){
+            if(u1.isEmpty() && Objects.equals(user.getFirstName(), firstName1) && Objects.equals(user.getLastName(), lastName1)){
+                u1 = Optional.of(user);
+            }
+            if(u2.isEmpty() && Objects.equals(user.getFirstName(), firstName2) && Objects.equals(user.getLastName(), lastName2)){
+                u2 = Optional.of(user);
+            }
+        }
         try {
-            if (repo.findOne(u1.getId()).isPresent() && repo.findOne(u2.getId()).isPresent()) {
-                repo.findOne(u1.getId()).get().addFriend(u2.getId());
-                repo.findOne(u2.getId()).get().addFriend(u1.getId());
+            if (u1.isPresent() && u2.isPresent()) {
+                repo.findOne(u1.get().getId()).get().addFriend(u2.get().getId());
+                repo.findOne(u2.get().getId()).get().addFriend(u1.get().getId());
+                Friendship friendship = new Friendship();
+                friendship.setId(new Tuple<Long, Long>(u1.get().getId(), u2.get().getId()));
+                repo.saveFriendship(friendship);
             }
         }catch(Exception e){
             throw new ServiceException("Friendship was not added!");
@@ -90,6 +100,28 @@ public class UserService{
     public int getNumberOfCommunities() {
         ArrayList<Friendship> friendships = getFriendshipList();
         return noConnectedComponents(friendships);
+    }
+
+    public List<String> friendsFromAMonthOfTheYear(String firstName, String lastName, String month){
+        Optional<User> u = Optional.empty();
+        for(User user : repo.getAll()){
+            if(Objects.equals(user.getFirstName(), firstName) && Objects.equals(user.getLastName(), lastName)){
+                u = Optional.of(user);
+                break;
+            }
+        }
+        if(u.isEmpty())
+            throw new ServiceException("Nu exista un astfel de utilizator");
+        Optional<User> finalU = u;
+        return repo.getAllFriendship()
+                .stream()
+                .filter(friendship -> (Objects.equals(friendship.getId().getE1(), finalU.get().getId()) || Objects.equals(friendship.getId().getE2(), finalU.get().getId())) && Objects.equals(friendship.getFriendsFrom().getMonthValue(), month))
+                .map(friendship -> {
+                    if(Objects.equals(friendship.getId().getE1(), finalU.get().getId()))
+                        return repo.findOne(friendship.getId().getE2()).get().getFirstName() + " | " + repo.findOne(friendship.getId().getE2()).get().getLastName() + " | " + friendship.getFriendsFrom();
+                    return repo.findOne(friendship.getId().getE1()).get().getFirstName() + " | " + repo.findOne(friendship.getId().getE1()).get().getLastName() + " | " + friendship.getFriendsFrom();
+                })
+                .collect(Collectors.toList());
     }
 
     public List<String> getMostSocialCommunity() {

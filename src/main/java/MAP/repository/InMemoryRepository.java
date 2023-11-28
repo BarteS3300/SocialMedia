@@ -13,8 +13,6 @@ public class InMemoryRepository<ID, E extends Entity<ID>> implements Repository<
 
     private Validator<E> validator;
 
-    private ArrayList<Friendship> friendships = new ArrayList<>();
-
     Map<ID, E> entities;
 
     public InMemoryRepository(Validator<E> validator) {
@@ -64,18 +62,5 @@ public class InMemoryRepository<ID, E extends Entity<ID>> implements Repository<
             }
         return Optional.of(entity);
     }
-
-    public void addFriendship(Friendship f){
-        friendships.add(f);
-    }
-
-    public void removeFriendship(Friendship f){
-        friendships.remove(f);
-    }
-
-    public ArrayList<Friendship> friendships(){
-        return friendships;
-    }
-
 
 }
