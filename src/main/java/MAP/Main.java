@@ -14,9 +14,6 @@ public class Main {
         //InMemoryRepository<Long, User> repo = new InMemoryRepository<>(validation);
         UserDBRepository repo = new UserDBRepository(validation, "jdbc:postgresql://localhost:5432/SocialNetwork", "postgres", "postgres");
         UserService service = new UserService(repo);
-        service.friendsFromAMonthOfTheYear("nume1", "prenume1", 11);
-        System.out.println(service.getAll());
-
         UI ui = new UI(service);
         ui.run();
     }
