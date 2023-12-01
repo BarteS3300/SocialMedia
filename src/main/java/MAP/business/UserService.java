@@ -102,7 +102,7 @@ public class UserService{
         return noConnectedComponents(friendships);
     }
 
-    public List<String> friendsFromAMonthOfTheYear(String firstName, String lastName, String month){
+    public List<String> friendsFromAMonthOfTheYear(String firstName, String lastName, int month){
         Optional<User> u = Optional.empty();
         for(User user : repo.getAll()){
             if(Objects.equals(user.getFirstName(), firstName) && Objects.equals(user.getLastName(), lastName)){
@@ -116,11 +116,7 @@ public class UserService{
         return repo.getAllFriendship()
                 .stream()
                 .filter(friendship -> (Objects.equals(friendship.getId().getE1(), finalU.get().getId()) || Objects.equals(friendship.getId().getE2(), finalU.get().getId())) && Objects.equals(friendship.getFriendsFrom().getMonthValue(), month))
-                .map(friendship -> {
-                    if(Objects.equals(friendship.getId().getE1(), finalU.get().getId()))
-                        return repo.findOne(friendship.getId().getE2()).get().getFirstName() + " | " + repo.findOne(friendship.getId().getE2()).get().getLastName() + " | " + friendship.getFriendsFrom();
-                    return repo.findOne(friendship.getId().getE1()).get().getFirstName() + " | " + repo.findOne(friendship.getId().getE1()).get().getLastName() + " | " + friendship.getFriendsFrom();
-                })
+                .map(friendship -> Objects.equals(friendship.getId().getE1(), finalU.get().getId()) ? repo.findOne(friendship.getId().getE2()).get().getFirstName() + " | " + repo.findOne(friendship.getId().getE2()).get().getLastName() + " | " + friendship.getFriendsFrom() : repo.findOne(friendship.getId().getE1()).get().getFirstName() + " | " + repo.findOne(friendship.getId().getE1()).get().getLastName() + " | " + friendship.getFriendsFrom())
                 .collect(Collectors.toList());
     }
 

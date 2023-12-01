@@ -93,7 +93,7 @@ public class UI {
             System.out.print("The last name of the user: ");
             String lastName = reader.readLine();
             System.out.print("The month: ");
-            String month = reader.readLine();
+            int month = Integer.parseInt(reader.readLine());
             service.friendsFromAMonthOfTheYear(firstName, lastName, month).forEach(System.out::println);
         }
         catch(IOException | ValidationException | IllegalArgumentException | ServiceException e){
