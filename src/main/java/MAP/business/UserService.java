@@ -36,8 +36,8 @@ public class UserService{
         User u = new User(firstName, lastName);
         u.setId((long) u.hashCode());
         try {
-            for (Long id : repo.findOne(u.getId()).get().getFriends())
-                repo.findOne(id).get().removeFriend(u.getId());
+//            for (Long id : repo.findOne(u.getId()).get().getFriends())
+//                repo.findOne(id).get().removeFriend(u.getId());
             return repo.delete(u.getId()).get();
         } catch (Exception e) {
             throw new ServiceException("User doesn't exist!");

@@ -35,9 +35,9 @@ public class UI {
     private void deleteUser(){
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         try {
-            System.out.println("The first name of the first user:");
+            System.out.println("The first name of the user:");
             String fistName1 = reader.readLine();
-            System.out.println("The last name of the first user:");
+            System.out.println("The last name of the user:");
             String lastName1 = reader.readLine();
             service.removeUser(fistName1, lastName1);
             System.out.println("User deleted!");

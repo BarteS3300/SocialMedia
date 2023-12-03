@@ -16,6 +16,10 @@ public class    Friendship extends Entity<Tuple<Long, Long>>{
         friendsFrom = localDateTime;
     }
 
+    public void setFriendsFrom(LocalDateTime friendsFrom) {
+        this.friendsFrom = friendsFrom;
+    }
+
     public LocalDateTime getFriendsFrom() {
         return friendsFrom;
     }
