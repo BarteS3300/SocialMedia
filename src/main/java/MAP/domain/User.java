@@ -6,13 +6,15 @@ import java.util.Objects;
 
 public class User extends Entity<Long>{
 
+    private String username;
     private String firstName;
 
     private String lastName;
 
     private List<Long> friends = new ArrayList<>();
 
-    public User(String firstName, String lastName) {
+    public User(String username, String firstName, String lastName) {
+        this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
     }
@@ -29,13 +31,23 @@ public class User extends Entity<Long>{
         return lastName;
     }
 
-    public void setSecondName(String lastName) {
+    public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public void addFriend(Long id){ this.friends.add(id); }
 
-    public void removeFriend(Long id){ this.friends.remove(id); }
+    public void removeFriend(Long id){
+        this.friends.remove(id);
+    }
 
     public List<Long> getFriends() {
         return friends;
@@ -44,7 +56,8 @@ public class User extends Entity<Long>{
     @Override
     public String toString() {
         return "User{" +
-                "firstName='" + firstName + '\'' +
+                "username = '" + username + '\'' +
+                ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", friends=" + friends +
                 '}';

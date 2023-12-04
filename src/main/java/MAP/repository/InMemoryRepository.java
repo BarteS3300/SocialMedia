@@ -45,10 +45,10 @@ public class InMemoryRepository<ID, E extends Entity<ID>> implements Repository<
         }
     }
 
-    public Optional<E> delete(ID id){
+    public boolean delete(ID id){
         if (id == null)
             throw new IllegalArgumentException("id must not be null");
-        return Optional.ofNullable(entities.remove(id));
+        return entities.remove(id) != null;
     }
 
     @Override

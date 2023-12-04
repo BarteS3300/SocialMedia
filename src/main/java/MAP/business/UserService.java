@@ -6,6 +6,7 @@ import MAP.domain.User;
 import MAP.repository.InMemoryRepository;
 import MAP.repository.UserDBRepository;
 import MAP.repository.Repository;
+import MAP.validators.Validator;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -15,6 +16,8 @@ public class UserService{
 
     private UserDBRepository repo;
 
+    private Validator<User> validator;
+
     public UserService(UserDBRepository repo) {
         this.repo = repo;
     }
@@ -23,77 +26,87 @@ public class UserService{
         return repo.getAll();
     }
 
-    public void saveUser(String firstName, String lastName) throws ServiceException{
-        User u = new User(firstName, lastName);
-        u.setId((long) u.hashCode());
+    public void saveUser(String username, String firstName, String lastName) throws ServiceException{
+        User u = new User(username, firstName, lastName);
         Optional<User> saved = repo.save(u);
         if(saved.isPresent()){
             throw new ServiceException("User already exist!");
         }
     }
 
-    public User removeUser(String firstName, String lastName) throws ServiceException{
-        User u = new User(firstName, lastName);
-        u.setId((long) u.hashCode());
-        try {
-//            for (Long id : repo.findOne(u.getId()).get().getFriends())
-//                repo.findOne(id).get().removeFriend(u.getId());
-            return repo.delete(u.getId()).get();
-        } catch (Exception e) {
-            throw new ServiceException("User doesn't exist!");
+    public User removeUser(String username) throws ServiceException {
+        Optional<User> deleted = Optional.empty();
+        for (User user : repo.getAll()) {
+            if (Objects.equals(user.getUsername(), username)) {
+                deleted = Optional.of(user);
+                break;
+            }
         }
+        if (deleted.isPresent()) {
+            repo.delete(deleted.get().getId());
+            return deleted.get();
+        }
+        throw new ServiceException("User doesn't exist!");
     }
 
-    public User updateUser(String firstName, String lastName, String updatedFirstName, String updatedLastName) throws ServiceException{
-        User u = new User(firstName, lastName);
-        u.setId((long) u.hashCode());
-        User updatedU = new User(firstName, lastName);
-        Optional<User> updated = repo.update(u);
-        if(updated.isEmpty()){
-            throw new ServiceException("User doesn't exist!");
+    public User updateUser(String username, String newUsername, String newFirstName, String newLastName) throws ServiceException{
+        Optional<User> old = Optional.empty();
+        User updated = new User(newUsername, newFirstName, newLastName);
+        for(User user : repo.getAll()){
+            if(Objects.equals(user.getUsername(), username)){
+                old = Optional.of(user);
+                break;
+            }
         }
-        return updated.get();
+        if(old.isPresent()){
+            updated.setId(old.get().getId());
+            if(repo.update(updated).isPresent())
+                return old.get();
+        }
+        throw new ServiceException("User doesn't exist!");
     }
 
-    public void addFriendship(String firstName1, String lastName1, String firstName2, String lastName2) throws ServiceException{
+    public void addFriendship(String username1, String username2) throws ServiceException{
         Optional<User> u1 = Optional.empty();
         Optional<User> u2 = Optional.empty();
         for(User user : repo.getAll()){
-            if(u1.isEmpty() && Objects.equals(user.getFirstName(), firstName1) && Objects.equals(user.getLastName(), lastName1)){
+            if(u1.isEmpty() && Objects.equals(user.getUsername(), username1)){
                 u1 = Optional.of(user);
             }
-            if(u2.isEmpty() && Objects.equals(user.getFirstName(), firstName2) && Objects.equals(user.getLastName(), lastName2)){
+            if(u2.isEmpty() && Objects.equals(user.getUsername(), username2)){
                 u2 = Optional.of(user);
             }
         }
-        try {
-            if (u1.isPresent() && u2.isPresent()) {
-                repo.findOne(u1.get().getId()).get().addFriend(u2.get().getId());
-                repo.findOne(u2.get().getId()).get().addFriend(u1.get().getId());
+        if (u1.isPresent() && u2.isPresent()) {
                 Friendship friendship = new Friendship();
                 friendship.setId(new Tuple<Long, Long>(u1.get().getId(), u2.get().getId()));
-                repo.saveFriendship(friendship);
-            }
-        }catch(Exception e){
-            throw new ServiceException("Friendship was not added!");
+                if(repo.saveFriendship(friendship).isEmpty())
+                    return;
         }
+        throw new ServiceException("Friendship was not added!");
 
     }
 
-    public void deleteFriendship(String firstName1, String lastName1, String firstName2, String lastName2) throws ServiceException{
-        User u1 = new User(firstName1, lastName1);
-        u1.setId((long) u1.hashCode());
-        User u2 = new User(firstName2, lastName2);
-        u2.setId((long) u2.hashCode());
-        try {
-            if (repo.findOne(u1.getId()).isPresent() && repo.findOne(u2.getId()).isPresent()) {
-                repo.findOne(u1.getId()).get().removeFriend(u2.getId());
-                repo.findOne(u2.getId()).get().removeFriend(u1.getId());
+    public Friendship deleteFriendship(String username1, String username2) throws ServiceException{
+        Optional<User> u1 = Optional.empty();
+        Optional<User> u2 = Optional.empty();
+        for(User user : repo.getAll()){
+            if(u1.isEmpty() && Objects.equals(user.getUsername(), username1)){
+                u1 = Optional.of(user);
             }
-        }catch(Exception e){
-            throw new ServiceException("Friendship was not added!");
+            if(u2.isEmpty() && Objects.equals(user.getFirstName(), username2)){
+                u2 = Optional.of(user);
+            }
         }
-
+        if(u1.isPresent() && u2.isPresent()){
+            Tuple<Long, Long> id = new Tuple<Long, Long>(u1.get().getId(), u2.get().getId());
+            Optional<Friendship> friendship = repo.findOneFriendship(id);
+            if(friendship.isPresent()){
+                repo.deleteFriendship(id);
+                return friendship.get();
+            }
+        }
+        throw new ServiceException("Friendship was not added!");
     }
 
 
@@ -102,16 +115,16 @@ public class UserService{
         return noConnectedComponents(friendships);
     }
 
-    public List<String> friendsFromAMonthOfTheYear(String firstName, String lastName, int month){
+    public List<String> friendsFromAMonth(String username, int month){
         Optional<User> u = Optional.empty();
         for(User user : repo.getAll()){
-            if(Objects.equals(user.getFirstName(), firstName) && Objects.equals(user.getLastName(), lastName)){
+            if(Objects.equals(user.getUsername(), username)){
                 u = Optional.of(user);
                 break;
             }
         }
         if(u.isEmpty())
-            throw new ServiceException("Nu exista un astfel de utilizator");
+            throw new ServiceException("Nu exista un astfel de utilizator!");
         Optional<User> finalU = u;
         return repo.getAllFriendship()
                 .stream()
@@ -135,15 +148,6 @@ public class UserService{
             friendship.setId(new Tuple<Long, Long>(user.getId(), friend));
             friendships.add(friendship);
         }));
-
-//        for (User user : repo.getAll()) {
-//            for (Long friend : user.getFriends()) {
-//                Friendship friendship = new Friendship();
-//                friendship.setId(new Tuple<Long, Long>(user.getId(), friend));
-//                friendships.add(friendship);
-//            }
-//        }
-
         return friendships;
     }
 
@@ -158,35 +162,8 @@ public class UserService{
                 dfs2(node, visited, graph, longest);
             }
         });
-
-//        for (Long node : graph.keySet()) {
-//            if (!visited.contains(node)) {
-//                dfs2(node, visited, graph, longest);
-//            }
-//        }
-
         return longest;
     }
-
-//    private static List<Long> mostSocialCommunity2(ArrayList<Friendship> friendships) {
-//        Map<Long, ArrayList<Long>> graph = new HashMap<>();
-//        createGraph(friendships, graph);
-//        ArrayList<Long> largestComponent = new ArrayList<>();
-//        ArrayList<Long> currentComponent = new ArrayList<>();
-//        Set<Long> visited = new HashSet<>();
-//
-//        for (Long node : graph.keySet()) {
-//            if (!visited.contains(node)) {
-//                currentComponent.clear();
-//                dfs2(node, visited, graph, largestComponent);
-//                if (currentComponent.size() > largestComponent.size()) {
-//                    largestComponent = new ArrayList<>(currentComponent);
-//                }
-//            }
-//        }
-//
-//        return largestComponent;
-//    }
 
     private static int noConnectedComponents(ArrayList<Friendship> friendships) {
         Map<Long, ArrayList<Long>> graph = new HashMap<>();
@@ -200,13 +177,6 @@ public class UserService{
                 dfs(node, visited, graph);
             }
         });
-
-//        for (Long node : graph.keySet()) {
-//            if (!visited.contains(node)) {
-//                components.getAndIncrement();
-//                dfs(node, visited, graph);
-//            }
-//        }
 
         return components.get();
     }

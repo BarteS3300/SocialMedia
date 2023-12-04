@@ -13,7 +13,8 @@ public interface Repository<ID, E extends Entity<ID>> {
 
     Optional<E> save (E entity);
 
-    Optional<E> delete(ID id);
+    boolean delete(ID id);
 
     Optional<E> update(E entity);
+
 }

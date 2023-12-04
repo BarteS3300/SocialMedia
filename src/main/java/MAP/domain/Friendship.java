@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 import MAP.domain.User;
 
-public class    Friendship extends Entity<Tuple<Long, Long>>{
+public class Friendship extends Entity<Tuple<Long, Long>>{
 
     LocalDateTime friendsFrom;
 
