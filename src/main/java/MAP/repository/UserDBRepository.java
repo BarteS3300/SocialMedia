@@ -56,7 +56,7 @@ public class UserDBRepository implements Repository<Long, User> {
             }
             return Optional.empty();
         } catch (SQLException SQLError) {
-            throw new ServiceException("Database connection error!");
+            throw new RepositoryException("Database connection error!");
         }
     }
 
@@ -94,11 +94,12 @@ public class UserDBRepository implements Repository<Long, User> {
             }
             return users;
         } catch (SQLException SQLError) {
-            throw new ServiceException("Database connection error!" + SQLError);
+            throw new RepositoryException("Database connection error!" + SQLError);
         }
     }
 
     public Optional<User> save(User entity) {
+        validator.validate(entity);
         String insertSQL = "insert into users (username, firstname, lastname) values(?, ?, ?)";
 
         try {
@@ -110,7 +111,7 @@ public class UserDBRepository implements Repository<Long, User> {
             int response = statement.executeUpdate();
             return response == 0 ? Optional.of(entity) : Optional.empty();
         } catch (SQLException SQLError) {
-            throw new ServiceException("Database connection error! " + SQLError);
+            throw new RepositoryException("Database connection error! " + SQLError);
         }
     }
 
@@ -123,11 +124,12 @@ public class UserDBRepository implements Repository<Long, User> {
             int response = deleteStatement.executeUpdate();
             return response != 0;
         } catch (SQLException SQLError) {
-            throw new ServiceException("Database connection error! " + SQLError);
+            throw new RepositoryException("Database connection error! " + SQLError);
         }
     }
 
     public Optional<User> update(User entity) {
+        validator.validate(entity);
         String updateSQL = "update users set username = ?, firstname = ?, lastname = ? where id = ?";
         try {
             Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
@@ -139,78 +141,78 @@ public class UserDBRepository implements Repository<Long, User> {
             int response =  updateStatement.executeUpdate();
             return response == 0 ? Optional.empty() : Optional.of(entity);
         } catch (SQLException SQLError) {
-            throw new ServiceException("Database connection error! " + SQLError);
+            throw new RepositoryException("Database connection error! " + SQLError);
         }
     }
 
-    public Optional<Friendship> findOneFriendship(Tuple<Long, Long> id){
-        String findOneSQL = "select * from friendships where ((user1_id = ? and user2_id = ?) or (user1_id = ? and user2_id = ?))";
-        try{
-            Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
-            PreparedStatement findOneStatement = connection.prepareStatement(findOneSQL);
-            findOneStatement.setLong(1, id.getE1());
-            findOneStatement.setLong(2, id.getE2());
-            findOneStatement.setLong(3, id.getE2());
-            findOneStatement.setLong(4, id.getE1());
-            ResultSet resultFindOne = findOneStatement.executeQuery();
-            if(resultFindOne.next()){
-                Friendship friendship = new Friendship(resultFindOne.getTimestamp("friendsfrom").toLocalDateTime());
-                friendship.setId(id);
-                return Optional.of(friendship);
-            }
-            return Optional.empty();
-
-        } catch (SQLException SQLError){
-            throw  new ServiceException("Database connection error!" + SQLError);
-        }
-    }
-
-    public List<Friendship> getAllFriendship() {
-        List<Friendship> friendships = new ArrayList<Friendship>();
-        try {
-            Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
-            PreparedStatement statement = connection.prepareStatement("select * from friendships");
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                Friendship friendship = new Friendship(resultSet.getTimestamp("friendsfrom").toLocalDateTime());
-                friendship.setId(new Tuple<Long, Long>(resultSet.getLong(1), resultSet.getLong(2)));
-                friendships.add(friendship);
-            }
-            return friendships;
-        } catch (SQLException SQLError) {
-            throw new ServiceException("Database connection error!" + SQLError);
-        }
-    }
-
-    public Optional<Friendship> saveFriendship(Friendship friendship) {
-        String insertSQL = "insert into friendships (user1_id, user2_id, friendsFrom) values(?, ?, ?)";
-        try {
-            Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
-            PreparedStatement statement = connection.prepareStatement(insertSQL);
-            statement.setLong(1, friendship.getId().getE1());
-            statement.setLong(2, friendship.getId().getE2());
-            statement.setTimestamp(3, Timestamp.valueOf(friendship.getFriendsFrom()));
-            int response = statement.executeUpdate();
-            return response == 0 ? Optional.of(friendship) : Optional.empty();
-        } catch (SQLException SQLError) {
-            throw new ServiceException("Database connection error!" + SQLError);
-        }
-    }
-
-    public boolean deleteFriendship(Tuple<Long, Long> id){
-        String deleteSQL = "delete from friendships where ((user1_id = ? and user2_id = ?) or (user1_id = ? and user2_id = ?))";
-        try{
-            Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
-            PreparedStatement deleteFriendshipStatement = connection.prepareStatement(deleteSQL);
-            deleteFriendshipStatement.setLong(1, id.getE1());
-            deleteFriendshipStatement.setLong(2, id.getE2());
-            deleteFriendshipStatement.setLong(3, id.getE2());
-            deleteFriendshipStatement.setLong(4, id.getE1());
-            int result = deleteFriendshipStatement.executeUpdate();
-            return result != 0;
-        }catch (SQLException SQLError){
-            throw new ServiceException("Database connection error" + SQLError);
-        }
-    }
+//    public Optional<Friendship> findOneFriendship(Tuple<Long, Long> id){
+//        String findOneSQL = "select * from friendships where ((user1_id = ? and user2_id = ?) or (user1_id = ? and user2_id = ?))";
+//        try{
+//            Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
+//            PreparedStatement findOneStatement = connection.prepareStatement(findOneSQL);
+//            findOneStatement.setLong(1, id.getE1());
+//            findOneStatement.setLong(2, id.getE2());
+//            findOneStatement.setLong(3, id.getE2());
+//            findOneStatement.setLong(4, id.getE1());
+//            ResultSet resultFindOne = findOneStatement.executeQuery();
+//            if(resultFindOne.next()){
+//                Friendship friendship = new Friendship(resultFindOne.getTimestamp("friendsfrom").toLocalDateTime());
+//                friendship.setId(id);
+//                return Optional.of(friendship);
+//            }
+//            return Optional.empty();
+//
+//        } catch (SQLException SQLError){
+//            throw  new RepositoryException("Database connection error!" + SQLError);
+//        }
+//    }
+//
+//    public List<Friendship> getAllFriendship() {
+//        List<Friendship> friendships = new ArrayList<Friendship>();
+//        try {
+//            Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
+//            PreparedStatement statement = connection.prepareStatement("select * from friendships");
+//            ResultSet resultSet = statement.executeQuery();
+//            while (resultSet.next()) {
+//                Friendship friendship = new Friendship(resultSet.getTimestamp("friendsfrom").toLocalDateTime());
+//                friendship.setId(new Tuple<Long, Long>(resultSet.getLong(1), resultSet.getLong(2)));
+//                friendships.add(friendship);
+//            }
+//            return friendships;
+//        } catch (SQLException SQLError) {
+//            throw new RepositoryException("Database connection error!" + SQLError);
+//        }
+//    }
+//
+//    public Optional<Friendship> saveFriendship(Friendship friendship) {
+//        String insertSQL = "insert into friendships (user1_id, user2_id, friendsFrom) values(?, ?, ?)";
+//        try {
+//            Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
+//            PreparedStatement statement = connection.prepareStatement(insertSQL);
+//            statement.setLong(1, friendship.getId().getE1());
+//            statement.setLong(2, friendship.getId().getE2());
+//            statement.setTimestamp(3, Timestamp.valueOf(friendship.getFriendsFrom()));
+//            int response = statement.executeUpdate();
+//            return response == 0 ? Optional.of(friendship) : Optional.empty();
+//        } catch (SQLException SQLError) {
+//            throw new RepositoryException("Database connection error!" + SQLError);
+//        }
+//    }
+//
+//    public boolean deleteFriendship(Tuple<Long, Long> id){
+//        String deleteSQL = "delete from friendships where ((user1_id = ? and user2_id = ?) or (user1_id = ? and user2_id = ?))";
+//        try{
+//            Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
+//            PreparedStatement deleteFriendshipStatement = connection.prepareStatement(deleteSQL);
+//            deleteFriendshipStatement.setLong(1, id.getE1());
+//            deleteFriendshipStatement.setLong(2, id.getE2());
+//            deleteFriendshipStatement.setLong(3, id.getE2());
+//            deleteFriendshipStatement.setLong(4, id.getE1());
+//            int result = deleteFriendshipStatement.executeUpdate();
+//            return result != 0;
+//        }catch (SQLException SQLError){
+//            throw new RepositoryException("Database connection error" + SQLError);
+//        }
+//    }
 }
 

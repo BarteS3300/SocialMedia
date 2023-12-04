@@ -11,24 +11,28 @@ import MAP.validators.Validator;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 public class UserService{
 
-    private UserDBRepository repo;
+    private Repository<Long, User> repoUsers;
+
+    private Repository<Tuple<Long, Long>, Friendship> repoFriendships;
 
     private Validator<User> validator;
 
-    public UserService(UserDBRepository repo) {
-        this.repo = repo;
+    public UserService(Repository<Long, User> repoUsers, Repository<Tuple<Long, Long>, Friendship> repoFriendships) {
+        this.repoUsers = repoUsers;
+        this.repoFriendships = repoFriendships;
     }
 
     public Iterable<User> getAll() {
-        return repo.getAll();
+        return repoUsers.getAll();
     }
 
     public void saveUser(String username, String firstName, String lastName) throws ServiceException{
         User u = new User(username, firstName, lastName);
-        Optional<User> saved = repo.save(u);
+        Optional<User> saved = repoUsers.save(u);
         if(saved.isPresent()){
             throw new ServiceException("User already exist!");
         }
@@ -36,14 +40,14 @@ public class UserService{
 
     public User removeUser(String username) throws ServiceException {
         Optional<User> deleted = Optional.empty();
-        for (User user : repo.getAll()) {
+        for (User user : repoUsers.getAll()) {
             if (Objects.equals(user.getUsername(), username)) {
                 deleted = Optional.of(user);
                 break;
             }
         }
         if (deleted.isPresent()) {
-            repo.delete(deleted.get().getId());
+            repoUsers.delete(deleted.get().getId());
             return deleted.get();
         }
         throw new ServiceException("User doesn't exist!");
@@ -52,7 +56,7 @@ public class UserService{
     public User updateUser(String username, String newUsername, String newFirstName, String newLastName) throws ServiceException{
         Optional<User> old = Optional.empty();
         User updated = new User(newUsername, newFirstName, newLastName);
-        for(User user : repo.getAll()){
+        for(User user : repoUsers.getAll()){
             if(Objects.equals(user.getUsername(), username)){
                 old = Optional.of(user);
                 break;
@@ -60,7 +64,7 @@ public class UserService{
         }
         if(old.isPresent()){
             updated.setId(old.get().getId());
-            if(repo.update(updated).isPresent())
+            if(repoUsers.update(updated).isPresent())
                 return old.get();
         }
         throw new ServiceException("User doesn't exist!");
@@ -69,7 +73,7 @@ public class UserService{
     public void addFriendship(String username1, String username2) throws ServiceException{
         Optional<User> u1 = Optional.empty();
         Optional<User> u2 = Optional.empty();
-        for(User user : repo.getAll()){
+        for(User user : repoUsers.getAll()){
             if(u1.isEmpty() && Objects.equals(user.getUsername(), username1)){
                 u1 = Optional.of(user);
             }
@@ -80,7 +84,7 @@ public class UserService{
         if (u1.isPresent() && u2.isPresent()) {
                 Friendship friendship = new Friendship();
                 friendship.setId(new Tuple<Long, Long>(u1.get().getId(), u2.get().getId()));
-                if(repo.saveFriendship(friendship).isEmpty())
+                if(repoFriendships.save(friendship).isEmpty())
                     return;
         }
         throw new ServiceException("Friendship was not added!");
@@ -90,7 +94,7 @@ public class UserService{
     public Friendship deleteFriendship(String username1, String username2) throws ServiceException{
         Optional<User> u1 = Optional.empty();
         Optional<User> u2 = Optional.empty();
-        for(User user : repo.getAll()){
+        for(User user : repoUsers.getAll()){
             if(u1.isEmpty() && Objects.equals(user.getUsername(), username1)){
                 u1 = Optional.of(user);
             }
@@ -100,13 +104,13 @@ public class UserService{
         }
         if(u1.isPresent() && u2.isPresent()){
             Tuple<Long, Long> id = new Tuple<Long, Long>(u1.get().getId(), u2.get().getId());
-            Optional<Friendship> friendship = repo.findOneFriendship(id);
+            Optional<Friendship> friendship = repoFriendships.findOne(id);
             if(friendship.isPresent()){
-                repo.deleteFriendship(id);
+                repoFriendships.delete(id);
                 return friendship.get();
             }
         }
-        throw new ServiceException("Friendship was not added!");
+        throw new ServiceException("Friendship was not deleted!");
     }
 
 
@@ -117,7 +121,7 @@ public class UserService{
 
     public List<String> friendsFromAMonth(String username, int month){
         Optional<User> u = Optional.empty();
-        for(User user : repo.getAll()){
+        for(User user : repoUsers.getAll()){
             if(Objects.equals(user.getUsername(), username)){
                 u = Optional.of(user);
                 break;
@@ -126,10 +130,9 @@ public class UserService{
         if(u.isEmpty())
             throw new ServiceException("Nu exista un astfel de utilizator!");
         Optional<User> finalU = u;
-        return repo.getAllFriendship()
-                .stream()
+        return StreamSupport.stream( repoFriendships.getAll().spliterator(), false)
                 .filter(friendship -> (Objects.equals(friendship.getId().getE1(), finalU.get().getId()) || Objects.equals(friendship.getId().getE2(), finalU.get().getId())) && Objects.equals(friendship.getFriendsFrom().getMonthValue(), month))
-                .map(friendship -> Objects.equals(friendship.getId().getE1(), finalU.get().getId()) ? repo.findOne(friendship.getId().getE2()).get().getFirstName() + " | " + repo.findOne(friendship.getId().getE2()).get().getLastName() + " | " + friendship.getFriendsFrom() : repo.findOne(friendship.getId().getE1()).get().getFirstName() + " | " + repo.findOne(friendship.getId().getE1()).get().getLastName() + " | " + friendship.getFriendsFrom())
+                .map(friendship -> Objects.equals(friendship.getId().getE1(), finalU.get().getId()) ? repoUsers.findOne(friendship.getId().getE2()).get().getFirstName() + " | " + repoUsers.findOne(friendship.getId().getE2()).get().getLastName() + " | " + friendship.getFriendsFrom() : repoUsers.findOne(friendship.getId().getE1()).get().getFirstName() + " | " + repoUsers.findOne(friendship.getId().getE1()).get().getLastName() + " | " + friendship.getFriendsFrom())
                 .collect(Collectors.toList());
     }
 
@@ -137,13 +140,13 @@ public class UserService{
         ArrayList<Friendship> friendships = getFriendshipList();
         return mostSocialCommunity(friendships)
                 .stream()
-                .map(id->repo.findOne(id).get().toString())
+                .map(id->repoUsers.findOne(id).get().toString())
                 .collect(Collectors.toList());
     }
 
     private ArrayList<Friendship> getFriendshipList() {
         ArrayList<Friendship> friendships = new ArrayList<>();
-        repo.getAll().forEach(user-> user.getFriends().forEach(friend-> {
+        repoUsers.getAll().forEach(user-> user.getFriends().forEach(friend-> {
             Friendship friendship = new Friendship();
             friendship.setId(new Tuple<Long, Long>(user.getId(), friend));
             friendships.add(friendship);
