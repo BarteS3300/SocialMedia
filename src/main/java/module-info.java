@@ -7,8 +7,6 @@ module MAP.interfaces {
     requires org.kordamp.bootstrapfx.core;
     requires java.sql;
 
-    opens MAP to javafx.fxml;
-    exports MAP;
     exports MAP.interfaces;
     opens MAP.interfaces to javafx.fxml;
 }

@@ -2,6 +2,8 @@ package MAP;
 
 import MAP.business.UserService;
 import MAP.domain.Friendship;
+import MAP.interfaces.GUIApplication;
+import MAP.interfaces.GUIController;
 import MAP.interfaces.UI;
 import MAP.repository.FriendshipDBRepository;
 import MAP.repository.InMemoryRepository;
@@ -19,6 +21,8 @@ public class Main {
         UserDBRepository repoUsers = new UserDBRepository(userValidation, "jdbc:postgresql://localhost:5432/SocialNetwork_v2", "postgres", "postgres");
         FriendshipDBRepository repoFriendships = new FriendshipDBRepository(friendshipValidation, "jdbc:postgresql://localhost:5432/SocialNetwork_v2", "postgres", "postgres");
         UserService service = new UserService(repoUsers, repoFriendships);
+        GUIController.getInstance().setService(service);
+        GUIApplication.launch(args);
         UI ui = new UI(service);
         ui.run();
     }
