@@ -6,8 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="255.0" prefWidth="358.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"><!-- fx:controller="MAP.interfaces.GUIController" -->
+<AnchorPane prefHeight="255.0" prefWidth="358.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MAP.interfaces.GUIControllerAddUser">
    <children>
       <Label layoutX="68.0" layoutY="39.0" text="Username:">
          <font>
@@ -27,15 +26,20 @@
          </font>
       </Label>
       <TextField fx:id="lastName" layoutX="179.0" layoutY="116.0" />
-      <Button layoutX="152.0" layoutY="177.0" mnemonicParsing="false" onAction="#AddButton" prefHeight="39.0" prefWidth="84.0" text="Add">
+      <Button fx:id="AddButton" layoutX="152.0" layoutY="177.0" mnemonicParsing="false" onAction="#AddButton" prefHeight="39.0" prefWidth="84.0" text="Add">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button layoutX="244.0" layoutY="177.0" mnemonicParsing="false" onAction="#CancelButton" prefHeight="27.0" prefWidth="84.0" text="Cancel">
+      <Button fx:id="CancelButton" layoutX="244.0" layoutY="177.0" mnemonicParsing="false" onAction="#CancelButton" prefHeight="27.0" prefWidth="84.0" text="Cancel">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
+      <Label fx:id="error" layoutX="51.0" layoutY="186.0" textFill="#ee0000">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

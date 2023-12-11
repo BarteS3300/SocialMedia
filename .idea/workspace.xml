@@ -4,15 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d8c08afe-8212-4bcc-ab74-2775ae916032" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/MAP/interfaces/AddWindow.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+    <list default="true" id="d8c08afe-8212-4bcc-ab74-2775ae916032" name="Changes" comment="v1.6">
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIControllerAddUser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIControllerDeleteUser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIControllerUpdateUser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/MAP/observer/Observable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/MAP/observer/Observer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/MAP/interfaces/DeleteWindow.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/MAP/interfaces/UpdateWindow.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/MAP/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MAP/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/MAP/interfaces/HelloApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/MAP/interfaces/HelloController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/MAP/business/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MAP/business/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/MAP/validators/UserValidation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MAP/validators/UserValidation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/MAP/interfaces/AddWindow.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/MAP/interfaces/AddWindow.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/MAP/interfaces/GUI.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/MAP/interfaces/GUI.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -43,15 +52,16 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="FxmlFile" />
+        <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="e56106db82238f058ebf63f474e93b1b67a00e92" />
+        <entry key="$PROJECT_DIR$" value="31684525a62808afe83b3281427f1732f1be3c45" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -70,50 +80,38 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/barte/IdeaProjects/SocialMedia/src/main/resources/MAP/interfaces/GUI.fxml&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.7468355&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.JavaFX&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "C:/Users/barte/IdeaProjects/lab7",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;postgresql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\barte\IdeaProjects\SocialMedia" />
-      <recent name="C:\Users\barte\IdeaProjects\SocialMedia\src\main" />
-      <recent name="C:\Users\barte\IdeaProjects\SocialMedia\src\main\java\MAP" />
-      <recent name="C:\Users\barte\IdeaProjects\SocialMedia\src\main\resources" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\barte\IdeaProjects\SocialMedia\src\main\resources\MAP\interfaces" />
-      <recent name="C:\Users\barte\IdeaProjects\SocialMedia\src\main\resources\interfaces" />
-      <recent name="C:\Users\barte\IdeaProjects\SocialMedia\src\main\resources" />
-      <recent name="C:\Users\barte\IdeaProjects\SocialMedia\src\main\resources\MAP" />
-      <recent name="C:\Users\barte\IdeaProjects\SocialMedia\src\main\java\MAP" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="MAP" />
       <recent name="MAP.interfaces" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="Application.GUIApplication">
     <configuration name="GUIApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="MAP.interfaces.GUIApplication" />
       <module name="SocialMedia.main" />
@@ -140,20 +138,10 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="JetRunConfigurationType">
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <option name="filePath" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.GUIApplication" />
+        <item itemvalue="Application.Main" />
         <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
@@ -178,11 +166,8 @@
       <workItem from="1701601479397" duration="595000" />
       <workItem from="1701603487038" duration="13522000" />
       <workItem from="1701646872255" duration="3566000" />
-      <workItem from="1701721155362" duration="1608000" />
-      <workItem from="1701723255022" duration="763000" />
-      <workItem from="1701724032059" duration="4626000" />
-      <workItem from="1701731147525" duration="6600000" />
-      <workItem from="1701758135430" duration="1222000" />
+      <workItem from="1701763841938" duration="620000" />
+      <workItem from="1702249962491" duration="22879000" />
     </task>
     <task id="LOCAL-00001" summary="v1">
       <option name="closed" value="true" />
@@ -232,15 +217,7 @@
       <option name="project" value="LOCAL" />
       <updated>1701648300571</updated>
     </task>
-    <task id="LOCAL-00007" summary="v1.7(toJavaFX)">
-      <option name="closed" value="true" />
-      <created>1701732593987</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1701732593989</updated>
-    </task>
-    <option name="localTasksCounter" value="8" />
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -263,12 +240,7 @@
     <MESSAGE value="v1.4(Lab 6)" />
     <MESSAGE value="v1.5" />
     <MESSAGE value="v1.6" />
-    <MESSAGE value="v1.7(toJavaFX)" />
-    <option name="LAST_COMMIT_MESSAGE" value="v1.7(toJavaFX)" />
-  </component>
-  <component name="XSLT-Support.FileAssociations.UIState">
-    <expand />
-    <select />
+    <option name="LAST_COMMIT_MESSAGE" value="v1.6" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/SocialMedia$HelloApplication.ic" NAME="HelloApplication Coverage Results" MODIFIED="1701729106857" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">

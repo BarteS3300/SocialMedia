@@ -1,48 +1,91 @@
 package MAP.interfaces;
 
+import MAP.business.ServiceException;
 import MAP.business.UserService;
 
+import MAP.domain.User;
+import MAP.observer.Observer;
+import MAP.repository.RepositoryException;
+import MAP.validators.ValidationException;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import javafx.scene.control.TextField;
 
-public class GUIController {
+import java.net.URL;
+import java.util.ResourceBundle;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
-    static private GUIController instance = null;
+public class GUIController implements Initializable, Observer {
     private UserService userService;
 
     @FXML
-    private TextField username;
-    @FXML
-    private TextField firstName;
-    @FXML
-    private TextField lastName;
-    @FXML
-    private TextField welcomeText;
+    private Button AddWindow;
 
-    private GUIController(){
+    @FXML
+    private Button DeleteWindow;
+
+    @FXML
+    private Button UpdateWindow;
+
+    private ObservableList<User> users = FXCollections.observableArrayList();
+
+    @FXML
+    private TableView<User> getAll;
+
+    @FXML
+    private TableColumn<User, Long> tableID;
+
+    @FXML
+    private TableColumn<User, String> tableUsername;
+
+    @FXML
+    private TableColumn<User, String> tableFirstName;
+
+    @FXML
+    private TableColumn<User, String> tableLastName;
+
+    public void setUserService(UserService service){
+        this.userService = service;
     }
 
-    public static GUIController getInstance(){
-        if(instance == null)
-            instance = new GUIController();
-        return instance;
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        tableID.setCellValueFactory(new PropertyValueFactory<User, Long>("id"));
+        tableUsername.setCellValueFactory(new PropertyValueFactory<User, String>("username"));
+        tableFirstName.setCellValueFactory(new PropertyValueFactory<User, String>("firstName"));
+        tableLastName.setCellValueFactory(new PropertyValueFactory<User, String>("lastName"));
+        getAll.setItems(users);
     }
 
-    public void setService(UserService userService){
-        this.userService = userService;
+    @Override
+    public void update() {
+        Iterable<User> usersList = userService.getAll();
+        users = FXCollections.observableArrayList(StreamSupport.stream(usersList.spliterator(), false).collect(Collectors.toList()));
+        getAll.setItems(users);
     }
 
     @FXML
     protected void AddWindow(){
         try{
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AddWindow.fxml"));
-            fxmlLoader.setController(GUIController.getInstance());
-            Scene scene = new Scene(fxmlLoader.load(), 420, 240);
+            Parent root = fxmlLoader.load();
+
+            GUIControllerAddUser controller = fxmlLoader.getController();
+            controller.setUserService(userService);
+
+
+            Scene scene = new Scene(root, 420, 240);
             Stage stage = new Stage();
-            stage.setTitle("User CRUD!");
+            stage.setTitle("Add user");
             stage.setScene(scene);
             stage.show();
         }catch (Exception e){
@@ -52,29 +95,39 @@ public class GUIController {
 
     @FXML
     protected void DeleteWindow() {
-        welcomeText.setText("Welcome to JavaFX Application!");
+        try{
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("DeleteWindow.fxml"));
+            Parent root = fxmlLoader.load();
+
+            GUIControllerDeleteUser controller = fxmlLoader.getController();
+            controller.setUserService(userService);
+
+            Scene scene = new Scene(root, 420, 240);
+            Stage stage = new Stage();
+            stage.setTitle("Delete user");
+            stage.setScene(scene);
+            stage.show();
+        }catch (Exception e){
+            System.out.println("Error: \n" + e.getMessage());
+        }
     }
     @FXML
     protected void UpdateWindow() {
-        welcomeText.setText("Welcome to JavaFX Application!");
-    }
-    @FXML
-    protected void FindOneWindow() {
-        welcomeText.setText("Welcome to JavaFX Application!");
-    }
-    @FXML
-    protected void GetAllWindow() {
-        welcomeText.setText("Welcome to JavaFX Application!");
-    }
-    @FXML
-    protected void AddButton(){
-        if(username == null || firstName == null || lastName == null)
-            welcomeText.setText("Error: \n" + "One or more fields are empty!");
-        else
-            welcomeText.setText("Welcome to JavaFX Application!");
-    }
-    @FXML
-    protected void CancelButton(){
-        welcomeText.setText("Welcome to JavaFX Application!");
+        try{
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("UpdateWindow.fxml"));
+            Parent root = fxmlLoader.load();
+
+            GUIControllerUpdateUser controller = fxmlLoader.getController();
+            controller.setUserService(userService);
+
+
+            Scene scene = new Scene(root, 420, 240);
+            Stage stage = new Stage();
+            stage.setTitle("Update user");
+            stage.setScene(scene);
+            stage.show();
+        }catch (Exception e){
+            System.out.println("Error: \n" + e.getMessage());
+        }
     }
 }

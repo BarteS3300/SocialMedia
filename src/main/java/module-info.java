@@ -1,6 +1,7 @@
 module MAP.interfaces {
     requires javafx.controls;
     requires javafx.fxml;
+    requires javafx.base;
 
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
@@ -9,4 +10,5 @@ module MAP.interfaces {
 
     exports MAP.interfaces;
     opens MAP.interfaces to javafx.fxml;
+    opens MAP.domain to javafx.base;
 }

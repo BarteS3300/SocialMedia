@@ -7,19 +7,23 @@ import MAP.repository.InMemoryRepository;
 import MAP.repository.UserDBRepository;
 import MAP.repository.Repository;
 import MAP.validators.Validator;
+import MAP.observer.Observable;
+import MAP.observer.Observer;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-public class UserService{
+public class UserService implements Observable<Observer>{
 
     private Repository<Long, User> repoUsers;
 
     private Repository<Tuple<Long, Long>, Friendship> repoFriendships;
 
     private Validator<User> validator;
+
+    private List<Observer> observers = new ArrayList<>();
 
     public UserService(Repository<Long, User> repoUsers, Repository<Tuple<Long, Long>, Friendship> repoFriendships) {
         this.repoUsers = repoUsers;
@@ -132,8 +136,14 @@ public class UserService{
         Optional<User> finalU = u;
         return StreamSupport.stream( repoFriendships.getAll().spliterator(), false)
                 .filter(friendship -> (Objects.equals(friendship.getId().getE1(), finalU.get().getId()) || Objects.equals(friendship.getId().getE2(), finalU.get().getId())) && Objects.equals(friendship.getFriendsFrom().getMonthValue(), month))
-                .map(friendship -> Objects.equals(friendship.getId().getE1(), finalU.get().getId()) ? repoUsers.findOne(friendship.getId().getE2()).get().getFirstName() + " | " + repoUsers.findOne(friendship.getId().getE2()).get().getLastName() + " | " + friendship.getFriendsFrom() : repoUsers.findOne(friendship.getId().getE1()).get().getFirstName() + " | " + repoUsers.findOne(friendship.getId().getE1()).get().getLastName() + " | " + friendship.getFriendsFrom())
+                .map(friendship -> toFriendshipPrint(friendship, finalU))
                 .collect(Collectors.toList());
+    }
+
+    private String toFriendshipPrint(Friendship friendship, Optional<User> finalU) {
+        return Objects.equals(friendship.getId().getE1(), finalU.get().getId())
+                ? repoUsers.findOne(friendship.getId().getE2()).get().getFirstName() + " | " + repoUsers.findOne(friendship.getId().getE2()).get().getLastName() + " | " + friendship.getFriendsFrom()
+                : repoUsers.findOne(friendship.getId().getE1()).get().getFirstName() + " | " + repoUsers.findOne(friendship.getId().getE1()).get().getLastName() + " | " + friendship.getFriendsFrom();
     }
 
     public List<String> getMostSocialCommunity() {
@@ -236,5 +246,14 @@ public class UserService{
         }
     }
 
+    public void addObserver(Observer e){
+        observers.add(e);
+    }
+    public void removeObserver(Observer e){
+        observers.remove(e);
+    }
+    public void notifyObservers(){
+        observers.forEach(Observer::update);
+    }
 
 }
