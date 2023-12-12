@@ -255,4 +255,47 @@ public class UserService{
         }
     }
 
+    public User login(String username, String password) throws ServiceException{
+        for (User user : repoUsers.getAll()) {
+            if (Objects.equals(user.getUsername(), username)){
+                if(Objects.equals(user.getPassword(), password)) {
+                    return user;
+                }
+                else{
+                    throw new ServiceException("Wrong password!");
+                }
+            }
+        }
+        throw new ServiceException("Username doesn't exist!");
+    }
+
+    public List<Friendship> getFriendsRequests(){
+        return StreamSupport.stream(repoFriendships.getAll().spliterator(), false)
+                .filter(friendship -> Objects.equals(friendship.getStatus(), "pending"))
+                .collect(Collectors.toList());
+    }
+
+    public void acceptFriendship(String username1, String username2) throws ServiceException{
+        Optional<User> u1 = Optional.empty();
+        Optional<User> u2 = Optional.empty();
+        for(User user : repoUsers.getAll()){
+            if(u1.isEmpty() && Objects.equals(user.getUsername(), username1)){
+                u1 = Optional.of(user);
+            }
+            if(u2.isEmpty() && Objects.equals(user.getUsername(), username2)){
+                u2 = Optional.of(user);
+            }
+        }
+        if(u1.isPresent() && u2.isPresent()){
+            Tuple<Long, Long> id = new Tuple<Long, Long>(u1.get().getId(), u2.get().getId());
+            Optional<Friendship> friendshipRequest = repoFriendships.findOne(id);
+            if(friendshipRequest.isPresent()){
+                Friendship friendship = friendshipRequest.get();
+                friendship.setStatus("accepted");
+                repoFriendships.update(friendship);
+                return;
+            }
+        }
+        throw new ServiceException("Friendship was not accepted!");
+    }
 }

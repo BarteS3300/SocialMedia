@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 public class GUIControllerAddUser {
     private UserService service;
 
-    private GUIController guiController;
+    private GUIControllerAdmin guiController;
 
     @FXML
     private TextField username;
@@ -33,7 +33,7 @@ public class GUIControllerAddUser {
     @FXML
     private Label error;
 
-    public void setParams(UserService service, GUIController controller){
+    public void setParams(UserService service, GUIControllerAdmin controller){
         this.service = service;
         this.guiController = controller;
     }

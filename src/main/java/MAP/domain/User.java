@@ -11,12 +11,26 @@ public class User extends Entity<Long>{
 
     private String lastName;
 
+    private String role;
+
+    private String password;
+
     private List<Long> friends = new ArrayList<>();
 
     public User(String username, String firstName, String lastName) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.role = "user";
+        this.password = "password";
+    }
+
+    public User(String username, String firstName, String lastName, String role, String password){
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.role = role;
+        this.password = password;
     }
 
     public String getFirstName() {
@@ -41,6 +55,22 @@ public class User extends Entity<Long>{
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public void addFriend(Long id){ this.friends.add(id); }

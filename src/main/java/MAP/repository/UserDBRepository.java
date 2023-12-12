@@ -28,7 +28,7 @@ public class UserDBRepository implements Repository<Long, User> {
 
     public Optional<User> findOne(Long id) {
         String findOneSQL = "select * from users where id = ?";
-        String findFriendsSQL = "select * from friendships where (user1_id = ? or user2_id = ?)";
+        String findFriendsSQL = "select * from friendships where (user1_id = ? or user2_id = ?) and status = 'accepted'";
         try {
             Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
             PreparedStatement findOneStatement = connection.prepareStatement(findOneSQL);
@@ -75,8 +75,10 @@ public class UserDBRepository implements Repository<Long, User> {
                 String username = resultFindAll.getString("username");
                 String firstName = resultFindAll.getString("firstname");
                 String lastName = resultFindAll.getString("lastname");
+                String role = resultFindAll.getString("role");
+                String password = resultFindAll.getString("password");
 
-                User user = new User(username, firstName, lastName);
+                User user = new User(username, firstName, lastName, role, password);
                 user.setId(id);
 
                 PreparedStatement findFriendsStatement = connection.prepareStatement(findFriendsSQL);
@@ -100,14 +102,16 @@ public class UserDBRepository implements Repository<Long, User> {
 
     public Optional<User> save(User entity) {
         validator.validate(entity);
-        String insertSQL = "insert into users (username, firstname, lastname) values(?, ?, ?)";
+        String insertSQL = "insert into users (username, password, firstname, lastname, role) values(?, ?, ?, ?, ?)";
 
         try {
             Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
             PreparedStatement statement = connection.prepareStatement(insertSQL);
             statement.setString(1, entity.getUsername());
-            statement.setString(2, entity.getFirstName());
-            statement.setString(3, entity.getLastName());
+            statement.setString(2, entity.getPassword());
+            statement.setString(3, entity.getFirstName());
+            statement.setString(4, entity.getLastName());
+            statement.setString(5, entity.getRole());
             int response = statement.executeUpdate();
             return response == 0 ? Optional.of(entity) : Optional.empty();
         } catch (SQLException SQLError) {
@@ -141,6 +145,27 @@ public class UserDBRepository implements Repository<Long, User> {
             int response =  updateStatement.executeUpdate();
             return response == 0 ? Optional.empty() : Optional.of(entity);
         } catch (SQLException SQLError) {
+            throw new RepositoryException("Database connection error! " + SQLError);
+        }
+    }
+
+    public Optional<User> login(String username, String password){
+        String loginSQL = "select * from users where id = ? and password = ?";
+        try{
+            Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
+            PreparedStatement loginStatement = connection.prepareStatement(loginSQL);
+            loginStatement.setString(1, username);
+            loginStatement.setString(2, password);
+            ResultSet resultLogin = loginStatement.executeQuery();
+            if(resultLogin.next()){
+                String firstName = resultLogin.getString("firstname");
+                String lastName = resultLogin.getString("lastname");
+                User user = new User(username, firstName, lastName);
+                user.setId(resultLogin.getLong("id"));
+                return Optional.of(user);
+            }
+            return Optional.empty();
+        }catch (SQLException SQLError){
             throw new RepositoryException("Database connection error! " + SQLError);
         }
     }

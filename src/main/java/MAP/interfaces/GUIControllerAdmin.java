@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-public class GUIController implements Initializable{
+public class GUIControllerAdmin implements Initializable{
     private UserService service;
 
     @FXML

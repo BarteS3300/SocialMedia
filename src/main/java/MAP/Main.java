@@ -1,12 +1,8 @@
 package MAP;
 
 import MAP.business.UserService;
-import MAP.domain.Friendship;
-import MAP.interfaces.GUIApplication;
-import MAP.interfaces.GUIController;
 import MAP.interfaces.UI;
 import MAP.repository.FriendshipDBRepository;
-import MAP.repository.InMemoryRepository;
 import MAP.repository.UserDBRepository;
 import MAP.validators.FriendshipValidator;
 import MAP.validators.UserValidation;

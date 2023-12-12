@@ -22,17 +22,16 @@ public class GUIApplication extends Application {
         //InMemoryRepository<Long, User> repo = new InMemoryRepository<>(validation);
         UserDBRepository repoUsers = new UserDBRepository(userValidation, "jdbc:postgresql://localhost:5432/SocialNetwork_v2", "postgres", "postgres");
         FriendshipDBRepository repoFriendships = new FriendshipDBRepository(friendshipValidation, "jdbc:postgresql://localhost:5432/SocialNetwork_v2", "postgres", "postgres");
-        UserService userService = new UserService(repoUsers, repoFriendships);
+        UserService service = new UserService(repoUsers, repoFriendships);
 
-        FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("GUI.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("Login.fxml"));
         Parent root = fxmlLoader.load();
 
-        GUIController controller = fxmlLoader.getController();
-        controller.setService(userService);
-        controller.loadTables();
+        GUIControllerLogin controller = fxmlLoader.getController();
+        controller.setService(service);
 
         Scene scene = new Scene(root, root.prefWidth(1), root.prefHeight(1));
-        stage.setTitle("User CRUD!");
+        stage.setTitle("Login");
         stage.setScene(scene);
         stage.show();
     }

@@ -40,7 +40,7 @@ public class FriendshipDBRepository implements Repository<Tuple<Long, Long>, Fri
             findOneStatement.setLong(4, id.getE1());
             ResultSet resultFindOne = findOneStatement.executeQuery();
             if(resultFindOne.next()){
-                Friendship friendship = new Friendship(resultFindOne.getTimestamp("friendsfrom").toLocalDateTime());
+                Friendship friendship = new Friendship(resultFindOne.getTimestamp("friendsfrom").toLocalDateTime(), resultFindOne.getString("status"));
                 friendship.setId(id);
                 return Optional.of(friendship);
             }
@@ -59,7 +59,7 @@ public class FriendshipDBRepository implements Repository<Tuple<Long, Long>, Fri
             PreparedStatement statement = connection.prepareStatement("select * from friendships");
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                Friendship friendship = new Friendship(resultSet.getTimestamp("friendsfrom").toLocalDateTime());
+                Friendship friendship = new Friendship(resultSet.getTimestamp("friendsfrom").toLocalDateTime(), resultSet.getString("status"));
                 friendship.setId(new Tuple<Long, Long>(resultSet.getLong(1), resultSet.getLong(2)));
                 friendships.add(friendship);
             }
@@ -72,13 +72,14 @@ public class FriendshipDBRepository implements Repository<Tuple<Long, Long>, Fri
     @Override
     public Optional<Friendship> save(Friendship friendship) {
         validator.validate(friendship);
-        String insertSQL = "insert into friendships (user1_id, user2_id, friendsFrom) values(?, ?, ?)";
+        String insertSQL = "insert into friendships (user1_id, user2_id, friendsFrom, status) values(?, ?, ?, ?)";
         try {
             Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
             PreparedStatement statement = connection.prepareStatement(insertSQL);
             statement.setLong(1, friendship.getId().getE1());
             statement.setLong(2, friendship.getId().getE2());
             statement.setTimestamp(3, Timestamp.valueOf(friendship.getFriendsFrom()));
+            statement.setString(4, friendship.getStatus());
             int response = statement.executeUpdate();
             return response == 0 ? Optional.of(friendship) : Optional.empty();
         } catch (SQLException SQLError) {
@@ -104,7 +105,18 @@ public class FriendshipDBRepository implements Repository<Tuple<Long, Long>, Fri
     }
 
     @Override
-    public Optional<Friendship> update(Friendship entity) {
-        return Optional.empty();
+    public Optional<Friendship> update(Friendship friendship) {
+        String updateSQL = "update friendships set role = ? where (user1_id = ? and user2_id = ?)";
+        try{
+            Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
+            PreparedStatement statement = connection.prepareStatement(updateSQL);
+            statement.setString(1, friendship.getStatus());
+            statement.setLong(2, friendship.getId().getE1());
+            statement.setLong(3, friendship.getId().getE2());
+            int response = statement.executeUpdate();
+            return response == 0 ? Optional.empty() : Optional.of(friendship);
+        } catch (SQLException SQLError) {
+            throw new RepositoryException("Database connection error!" + SQLError);
+        }
     }
 }
