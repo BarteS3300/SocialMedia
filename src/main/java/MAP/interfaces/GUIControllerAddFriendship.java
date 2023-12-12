@@ -10,14 +10,19 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class GUIControllerDeleteUser {
-    private UserService userService;
+public class GUIControllerAddFriendship {
+    private UserService service;
+
+    private GUIController guiController;
 
     @FXML
-    private TextField username;
+    private TextField username1;
 
     @FXML
-    private Button DeleteButton;
+    private TextField username2;
+
+    @FXML
+    private Button AddButton;
 
     @FXML
     private Button CancelButton;
@@ -25,16 +30,17 @@ public class GUIControllerDeleteUser {
     @FXML
     private Label error;
 
-    public void setUserService(UserService service){
-        this.userService = service;
+    public void setParams(UserService service, GUIController controller){
+        this.service = service;
+        this.guiController = controller;
     }
 
     @FXML
-    protected void DeleteButton() {
+    protected void AddButton() {
         try {
-            userService.removeUser(username.getText());
-            userService.notifyObservers();
-            Stage stage = (Stage) DeleteButton.getScene().getWindow();
+            service.addFriendship(username1.getText(), username2.getText());
+            guiController.update();
+            Stage stage = (Stage) AddButton.getScene().getWindow();
             stage.close();
         } catch (ValidationException | IllegalArgumentException | ServiceException | RepositoryException e) {
             error.setText("Error reading input: \n" + e.getMessage());
@@ -46,4 +52,5 @@ public class GUIControllerDeleteUser {
         Stage stage = (Stage) CancelButton.getScene().getWindow();
         stage.close();
     }
+
 }

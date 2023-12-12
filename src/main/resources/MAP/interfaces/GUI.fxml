@@ -2,12 +2,14 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="296.0" prefWidth="561.0" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MAP.interfaces.GUIController">
+<VBox alignment="CENTER" prefHeight="355.0" prefWidth="1100.0" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MAP.interfaces.GUIController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -17,19 +19,37 @@
             <VBox alignment="CENTER" prefHeight="142.0" prefWidth="100.0" spacing="30.0">
                <children>
                   <Button fx:id="AddWindow" mnemonicParsing="false" onAction="#AddWindow" prefHeight="30.0" prefWidth="100.0" text="Add User" />
-                  <Button fx:id="DeleteWindow" mnemonicParsing="false" onAction="#DeleteWindow" prefHeight="30.0" prefWidth="100.0" text="Delete User" />
+                  <Button fx:id="DeleteButton" mnemonicParsing="false" onAction="#DeleteButton" prefHeight="30.0" prefWidth="100.0" text="Delete User" />
                   <Button fx:id="UpdateWindow" mnemonicParsing="false" onAction="#UpdateWindow" prefHeight="30.0" prefWidth="100.0" text="Update User" />
                </children>
             </VBox>
-            <TableView fx:id="getAll" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="256.0" prefWidth="339.0">
+            <TableView fx:id="tableUsers" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="256.0" prefWidth="339.0">
               <columns>
-                <TableColumn id="tableID" fx:id="tableID" maxWidth="-Infinity" minWidth="60.0" prefWidth="60.0" text="ID" />
+                <TableColumn id="tableID" fx:id="tableIdUser" maxWidth="-Infinity" minWidth="60.0" prefWidth="60.0" text="ID User" />
                 <TableColumn id="tableUsername" fx:id="tableUsername" maxWidth="-Infinity" minWidth="88.0" prefWidth="88.0" text="Username" />
                   <TableColumn fx:id="tableFirstName" maxWidth="-Infinity" minWidth="88.0" prefWidth="88.0" text="First name" />
-                  <TableColumn fx:id="tableLastName" maxWidth="87.0" prefWidth="87.0" text="Last name" />
+                  <TableColumn fx:id="tableLastName" maxWidth="88.0" minWidth="-Infinity" prefWidth="88.0" text="Last name" />
               </columns>
             </TableView>
+            <TableView fx:id="tableFriendships" prefHeight="263.0" prefWidth="379.0">
+              <columns>
+                <TableColumn fx:id="tableUser1" maxWidth="-Infinity" minWidth="110.0" prefWidth="110.0" text="User 1" />
+                  <TableColumn fx:id="tableUser2" maxWidth="-Infinity" minWidth="110.0" prefWidth="110.0" text="User 2" />
+                  <TableColumn fx:id="tableFriendsFrom" maxWidth="151.0" minWidth="110.0" prefWidth="144.0" text="Friends from" />
+              </columns>
+            </TableView>
+            <VBox alignment="CENTER" prefHeight="263.0" prefWidth="110.0" spacing="30.0">
+               <children>
+                  <Button fx:id="AddFriendshipWindow" mnemonicParsing="false" onAction="#AddFriendshipWindow" prefHeight="30.0" prefWidth="110.0" text="Add Friendship" />
+                  <Button fx:id="DeleteFriendshipButton" mnemonicParsing="false" onAction="#DeleteFriendshipButton" prefHeight="30.0" prefWidth="110.0" text="Delete Friendship" />
+               </children>
+            </VBox>
          </children>
       </HBox>
+      <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="0.0" prefWidth="486.0" textAlignment="CENTER" textFill="#eb3232">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
    </children>
 </VBox>

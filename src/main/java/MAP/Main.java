@@ -21,8 +21,6 @@ public class Main {
         UserDBRepository repoUsers = new UserDBRepository(userValidation, "jdbc:postgresql://localhost:5432/SocialNetwork_v2", "postgres", "postgres");
         FriendshipDBRepository repoFriendships = new FriendshipDBRepository(friendshipValidation, "jdbc:postgresql://localhost:5432/SocialNetwork_v2", "postgres", "postgres");
         UserService service = new UserService(repoUsers, repoFriendships);
-//        GUIApplication.setUserService(service);
-        GUIApplication.main(args);
         UI ui = new UI(service);
         ui.run();
     }

@@ -11,16 +11,11 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class GUIControllerUpdateUser {
-    private UserService userService;
+    private UserService service;
 
-    @FXML
-    private TextField username;
+    private GUIController guiController;
 
-    @FXML
-    private TextField firstName;
-
-    @FXML
-    private TextField lastName;
+    private String username;
 
     @FXML
     private TextField new_username;
@@ -39,15 +34,17 @@ public class GUIControllerUpdateUser {
     @FXML
     private Label error;
 
-    public void setUserService(UserService service){
-        this.userService = service;
+    public void setUserService(UserService service, GUIController controller, String username){
+        this.service = service;
+        this.guiController = controller;
+        this.username = username;
     }
 
     @FXML
     protected void UpdateButton(){
         try {
-            userService.updateUser(username.getText(), new_username.getText(), new_firstName.getText(), new_lastName.getText());
-            userService.notifyObservers();
+            service.updateUser(this.username, new_username.getText(), new_firstName.getText(), new_lastName.getText());
+            guiController.update();
             Stage stage = (Stage) UpdateButton.getScene().getWindow();
             stage.close();
         } catch (ValidationException | IllegalArgumentException | ServiceException | RepositoryException e) {

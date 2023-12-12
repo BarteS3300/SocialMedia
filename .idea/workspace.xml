@@ -4,25 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d8c08afe-8212-4bcc-ab74-2775ae916032" name="Changes" comment="v1.6">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIControllerAddUser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIControllerDeleteUser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIControllerUpdateUser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/MAP/observer/Observable.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/MAP/observer/Observer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/MAP/interfaces/DeleteWindow.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/MAP/interfaces/UpdateWindow.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="d8c08afe-8212-4bcc-ab74-2775ae916032" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIControllerAddFriendship.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/MAP/interfaces/AddFriendshipWindow.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/MAP/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MAP/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/MAP/business/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MAP/business/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/MAP/validators/UserValidation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MAP/validators/UserValidation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIControllerAddUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIControllerAddUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIControllerDeleteUser.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIControllerUpdateUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIControllerUpdateUser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/MAP/interfaces/AddWindow.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/MAP/interfaces/AddWindow.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/MAP/interfaces/DeleteWindow.fxml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/MAP/interfaces/GUI.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/MAP/interfaces/GUI.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/MAP/interfaces/UpdateWindow.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/MAP/interfaces/UpdateWindow.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,9 +48,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="FxmlFile" />
         <option value="Class" />
-        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -167,7 +163,7 @@
       <workItem from="1701603487038" duration="13522000" />
       <workItem from="1701646872255" duration="3566000" />
       <workItem from="1701763841938" duration="620000" />
-      <workItem from="1702249962491" duration="22879000" />
+      <workItem from="1702249962491" duration="38891000" />
     </task>
     <task id="LOCAL-00001" summary="v1">
       <option name="closed" value="true" />
@@ -217,7 +213,23 @@
       <option name="project" value="LOCAL" />
       <updated>1701648300571</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="v1.7(Lab 7)">
+      <option name="closed" value="true" />
+      <created>1702333245262</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1702333245262</updated>
+    </task>
+    <task id="LOCAL-00008" summary="v1.9(Lab 7)">
+      <option name="closed" value="true" />
+      <created>1702333301871</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1702333301871</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -240,7 +252,9 @@
     <MESSAGE value="v1.4(Lab 6)" />
     <MESSAGE value="v1.5" />
     <MESSAGE value="v1.6" />
-    <option name="LAST_COMMIT_MESSAGE" value="v1.6" />
+    <MESSAGE value="v1.7(Lab 7)" />
+    <MESSAGE value="v1.9(Lab 7)" />
+    <option name="LAST_COMMIT_MESSAGE" value="v1.9(Lab 7)" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/SocialMedia$HelloApplication.ic" NAME="HelloApplication Coverage Results" MODIFIED="1701729106857" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">

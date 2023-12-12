@@ -11,7 +11,9 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class GUIControllerAddUser {
-    private UserService userService;
+    private UserService service;
+
+    private GUIController guiController;
 
     @FXML
     private TextField username;
@@ -31,15 +33,16 @@ public class GUIControllerAddUser {
     @FXML
     private Label error;
 
-    public void setUserService(UserService service){
-        this.userService = service;
+    public void setParams(UserService service, GUIController controller){
+        this.service = service;
+        this.guiController = controller;
     }
 
     @FXML
     protected void AddButton() {
         try {
-            userService.saveUser(username.getText(), firstName.getText(), lastName.getText());
-            userService.notifyObservers();
+            service.saveUser(username.getText(), firstName.getText(), lastName.getText());
+            guiController.update();
             Stage stage = (Stage) AddButton.getScene().getWindow();
             stage.close();
         } catch (ValidationException | IllegalArgumentException | ServiceException | RepositoryException e) {

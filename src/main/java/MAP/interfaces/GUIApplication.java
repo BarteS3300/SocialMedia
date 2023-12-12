@@ -28,12 +28,10 @@ public class GUIApplication extends Application {
         Parent root = fxmlLoader.load();
 
         GUIController controller = fxmlLoader.getController();
-        controller.setUserService(userService);
+        controller.setService(userService);
+        controller.loadTables();
 
-        userService.addObserver(controller);
-        userService.notifyObservers();
-
-        Scene scene = new Scene(root, 561, 296);
+        Scene scene = new Scene(root, root.prefWidth(1), root.prefHeight(1));
         stage.setTitle("User CRUD!");
         stage.setScene(scene);
         stage.show();

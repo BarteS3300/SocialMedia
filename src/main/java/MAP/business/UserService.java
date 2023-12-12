@@ -15,15 +15,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-public class UserService implements Observable<Observer>{
+public class UserService{
 
     private Repository<Long, User> repoUsers;
 
     private Repository<Tuple<Long, Long>, Friendship> repoFriendships;
 
     private Validator<User> validator;
-
-    private List<Observer> observers = new ArrayList<>();
 
     public UserService(Repository<Long, User> repoUsers, Repository<Tuple<Long, Long>, Friendship> repoFriendships) {
         this.repoUsers = repoUsers;
@@ -32,6 +30,13 @@ public class UserService implements Observable<Observer>{
 
     public Iterable<User> getAll() {
         return repoUsers.getAll();
+    }
+
+    public User findOneUser(Long Id) throws ServiceException{
+        Optional<User> user = repoUsers.findOne(Id);
+        if(user.isPresent())
+            return user.get();
+        throw new ServiceException("User doesn't exist!");
     }
 
     public void saveUser(String username, String firstName, String lastName) throws ServiceException{
@@ -74,6 +79,10 @@ public class UserService implements Observable<Observer>{
         throw new ServiceException("User doesn't exist!");
     }
 
+    public Iterable<Friendship> getAllFriendships(){
+        return repoFriendships.getAll();
+    }
+
     public void addFriendship(String username1, String username2) throws ServiceException{
         Optional<User> u1 = Optional.empty();
         Optional<User> u2 = Optional.empty();
@@ -102,7 +111,7 @@ public class UserService implements Observable<Observer>{
             if(u1.isEmpty() && Objects.equals(user.getUsername(), username1)){
                 u1 = Optional.of(user);
             }
-            if(u2.isEmpty() && Objects.equals(user.getFirstName(), username2)){
+            if(u2.isEmpty() && Objects.equals(user.getUsername(), username2)){
                 u2 = Optional.of(user);
             }
         }
@@ -244,16 +253,6 @@ public class UserService implements Observable<Observer>{
 
             visited.remove(node);
         }
-    }
-
-    public void addObserver(Observer e){
-        observers.add(e);
-    }
-    public void removeObserver(Observer e){
-        observers.remove(e);
-    }
-    public void notifyObservers(){
-        observers.forEach(Observer::update);
     }
 
 }

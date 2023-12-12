@@ -6,39 +6,39 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="255.0" prefWidth="358.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MAP.interfaces.GUIControllerAddUser">
+<AnchorPane prefHeight="227.0" prefWidth="430.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MAP.interfaces.GUIControllerAddUser">
    <children>
-      <Label layoutX="68.0" layoutY="39.0" text="Username:">
+      <Label layoutX="87.0" layoutY="39.0" text="Username:">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="username" layoutX="179.0" layoutY="40.0" />
-      <Label layoutX="67.0" layoutY="78.0" text="First name:">
+      <TextField fx:id="username" layoutX="236.0" layoutY="40.0" />
+      <Label layoutX="86.0" layoutY="78.0" text="First name:">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="firstName" layoutX="179.0" layoutY="79.0" />
-      <Label layoutX="68.0" layoutY="115.0" text="Last name:">
+      <TextField fx:id="firstName" layoutX="236.0" layoutY="79.0" />
+      <Label layoutX="87.0" layoutY="115.0" text="Last name:">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="lastName" layoutX="179.0" layoutY="116.0" />
-      <Button fx:id="AddButton" layoutX="152.0" layoutY="177.0" mnemonicParsing="false" onAction="#AddButton" prefHeight="39.0" prefWidth="84.0" text="Add">
+      <TextField fx:id="lastName" layoutX="236.0" layoutY="116.0" />
+      <Button fx:id="AddButton" layoutX="236.0" layoutY="158.0" mnemonicParsing="false" onAction="#AddButton" prefHeight="39.0" prefWidth="84.0" text="Add">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button fx:id="CancelButton" layoutX="244.0" layoutY="177.0" mnemonicParsing="false" onAction="#CancelButton" prefHeight="27.0" prefWidth="84.0" text="Cancel">
+      <Button fx:id="CancelButton" layoutX="332.0" layoutY="158.0" mnemonicParsing="false" onAction="#CancelButton" prefHeight="27.0" prefWidth="84.0" text="Cancel">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Label fx:id="error" layoutX="51.0" layoutY="186.0" textFill="#ee0000">
+      <Label fx:id="error" layoutX="47.0" layoutY="158.0" prefHeight="39.0" prefWidth="173.0" textFill="#ee0000">
          <font>
-            <Font size="15.0" />
+            <Font size="10.0" />
          </font>
       </Label>
    </children>
