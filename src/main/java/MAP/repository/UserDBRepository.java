@@ -103,9 +103,7 @@ public class UserDBRepository implements Repository<Long, User> {
     public Optional<User> save(User entity) {
         validator.validate(entity);
         String insertSQL = "insert into users (username, password, firstname, lastname, role) values(?, ?, ?, ?, ?)";
-
-        try {
-            Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
+        try(Connection connection = DriverManager.getConnection(this.url, this.username, this.password)) {
             PreparedStatement statement = connection.prepareStatement(insertSQL);
             statement.setString(1, entity.getUsername());
             statement.setString(2, entity.getPassword());

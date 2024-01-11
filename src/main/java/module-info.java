@@ -9,6 +9,8 @@ module MAP.interfaces {
     requires java.sql;
 
     exports MAP.interfaces;
+    exports MAP.domain;
+    exports MAP.business;
     opens MAP.interfaces to javafx.fxml;
     opens MAP.domain to javafx.base;
 }

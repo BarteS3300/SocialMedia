@@ -8,8 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="311.0" prefWidth="326.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MAP.interfaces.FriendRequestWindow">
+<AnchorPane prefHeight="311.0" prefWidth="326.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MAP.interfaces.GUIControllerFriendRequest">
    <children>
       <HBox layoutY="60.0" prefHeight="181.0" prefWidth="326.0">
          <children>
@@ -27,7 +26,10 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <Label fx:id="errorLabel" layoutX="23.0" layoutY="260.0" prefHeight="35.0" prefWidth="140.0" />
+      <Label fx:id="errorLabel" layoutX="23.0" layoutY="260.0" prefHeight="35.0" prefWidth="215.0">
+         <font>
+            <Font size="8.0" />
+         </font></Label>
       <Button fx:id="CloseButton" layoutX="245.0" layoutY="260.0" mnemonicParsing="false" onAction="#CloseButton" text="Close">
          <font>
             <Font size="16.0" />

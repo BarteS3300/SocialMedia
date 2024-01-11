@@ -1,14 +1,12 @@
 package MAP.business;
 
 import MAP.domain.Friendship;
+import MAP.domain.Message;
 import MAP.domain.Tuple;
 import MAP.domain.User;
-import MAP.repository.InMemoryRepository;
-import MAP.repository.UserDBRepository;
 import MAP.repository.Repository;
 import MAP.validators.Validator;
-import MAP.observer.Observable;
-import MAP.observer.Observer;
+import javafx.scene.control.CheckBox;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -21,11 +19,14 @@ public class UserService{
 
     private Repository<Tuple<Long, Long>, Friendship> repoFriendships;
 
+    private Repository<Long, Message> repoMessages;
+
     private Validator<User> validator;
 
-    public UserService(Repository<Long, User> repoUsers, Repository<Tuple<Long, Long>, Friendship> repoFriendships) {
+    public UserService(Repository<Long, User> repoUsers, Repository<Tuple<Long, Long>, Friendship> repoFriendships, Repository<Long, Message> repoMessages){
         this.repoUsers = repoUsers;
         this.repoFriendships = repoFriendships;
+        this.repoMessages = repoMessages;
     }
 
     public Iterable<User> getAll() {
@@ -95,7 +96,7 @@ public class UserService{
             }
         }
         if (u1.isPresent() && u2.isPresent()) {
-                Friendship friendship = new Friendship();
+                Friendship friendship = new Friendship("accepted");
                 friendship.setId(new Tuple<Long, Long>(u1.get().getId(), u2.get().getId()));
                 if(repoFriendships.save(friendship).isEmpty())
                     return;
@@ -269,7 +270,28 @@ public class UserService{
         throw new ServiceException("Username doesn't exist!");
     }
 
-    public List<Friendship> getFriendsRequests(){
+    public void requestFriendship(String username1, String username2){
+        Optional<User> u1 = Optional.empty();
+        Optional<User> u2 = Optional.empty();
+        for(User user : repoUsers.getAll()){
+            if(u1.isEmpty() && Objects.equals(user.getUsername(), username1)){
+                u1 = Optional.of(user);
+            }
+            if(u2.isEmpty() && Objects.equals(user.getUsername(), username2)){
+                u2 = Optional.of(user);
+            }
+        }
+        if (u1.isPresent() && u2.isPresent()) {
+            Friendship friendship = new Friendship();
+            friendship.setId(new Tuple<Long, Long>(u1.get().getId(), u2.get().getId()));
+            if(repoFriendships.save(friendship).isEmpty())
+                return;
+        }
+        throw new ServiceException("Friendship was not added!");
+
+    }
+
+    public List<Friendship> getFriendRequests(){
         return StreamSupport.stream(repoFriendships.getAll().spliterator(), false)
                 .filter(friendship -> Objects.equals(friendship.getStatus(), "pending"))
                 .collect(Collectors.toList());
@@ -297,5 +319,75 @@ public class UserService{
             }
         }
         throw new ServiceException("Friendship was not accepted!");
+    }
+
+    public ArrayList<Message> getAllMessages(User user){
+        return StreamSupport.stream(repoMessages.getAll().spliterator(), false)
+                .filter(message -> Objects.equals(message.getFrom(), user.getId()) || message.getTo().contains(user.getId()))
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    public void sendMessage(User user, List<User> toUser, String text){
+        Message message = new Message(user.getId(), toUser.stream().map(User::getId).collect(Collectors.toList()), text);
+        repoMessages.save(message);
+    }
+
+    public void replyMessage(User user, Message mes, String text){
+        ArrayList<Long> to = new ArrayList<>();
+        to.add(mes.getFrom());
+        Message message = new Message(user.getId(), to, text, mes.getData(), mes.getId());
+    }
+
+    public ArrayList<Message> oneMessagePerUser(User user){
+        ArrayList<Message> allMessages = getAllMessages(user);
+        ArrayList<Message> oneMessage = new ArrayList<>();
+        allMessages.sort(Comparator.comparing(Message::getData).reversed());
+        for(Message message : allMessages){
+//            if(Objects.equals(message.getFrom(), user.getId()) && oneMessage.stream().noneMatch(mes -> Objects.equals(mes.getTo(), message.getTo()))){
+//                oneMessage.add(message);
+//            }
+//            else if(message.getTo().contains(user.getId()) && oneMessage.stream().noneMatch(mes -> Objects.equals(mes.getFrom(), message.getFrom()) && Objects.equals(mes.getTo(), message.getTo()))){
+//                oneMessage.add(message);
+//            }
+            if(message.getTo().contains(user.getId())
+                    && oneMessage.stream().noneMatch(mes -> Objects.equals(mes.getFrom(), message.getFrom())
+                            || mes.getTo().contains(message.getFrom()))){
+                oneMessage.add(message);
+            }
+            else if(Objects.equals(message.getFrom(), user.getId())
+                    && oneMessage.stream().noneMatch(mes -> mes.getTo().contains(message.getTo().get(0))
+                            || message.getTo().contains(mes.getFrom()))){
+                    oneMessage.add(message);
+            }
+//            if(message.getTo().contains(user.getId()) &&
+//                    oneMessage.stream().noneMatch(mes -> Objects.equals(mes.getFrom(), message.getFrom())
+//                            || message.getTo().contains(mes.getFrom()))){
+//                oneMessage.add(message);
+//            }
+//            else if(Objects.equals(message.getFrom(), user.getId())){
+//                oneMessage.forEach(mes -> {
+//                    for (long toUser : message.getTo())
+//                        if (mes.getTo().contains(toUser))
+//                            message.getTo().remove(toUser);
+//                });
+//                if(!message.getTo().isEmpty())
+//                    oneMessage.add(message);
+//            }
+        }
+        return oneMessage;
+    }
+
+    public List<Tuple<User, CheckBox>> getAllCheck(){
+        Iterable<User> users = repoUsers.getAll();
+        List<Tuple<User, CheckBox>> usersCheck = new ArrayList<>();
+        for(User user : users){
+            Tuple<User, CheckBox> userCheck = new Tuple<User, CheckBox>(user, new CheckBox(){
+                @Override
+                public void arm() {
+                }
+            });
+            usersCheck.add(userCheck);
+        }
+        return usersCheck;
     }
 }

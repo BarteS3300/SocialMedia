@@ -89,7 +89,7 @@ public class FriendshipDBRepository implements Repository<Tuple<Long, Long>, Fri
 
     @Override
     public boolean delete(Tuple<Long, Long> id) {
-        String deleteSQL = "delete from friendships where ((user1_id = ? and user2_id = ?) or (user1_id = ? and user2_id = ?))";
+        String deleteSQL = "delete from friendships where ((user1_id = ? and user2_id = ?) or (user2_id = ? and user1_id = ?))";
         try{
             Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
             PreparedStatement deleteFriendshipStatement = connection.prepareStatement(deleteSQL);
@@ -106,13 +106,15 @@ public class FriendshipDBRepository implements Repository<Tuple<Long, Long>, Fri
 
     @Override
     public Optional<Friendship> update(Friendship friendship) {
-        String updateSQL = "update friendships set role = ? where (user1_id = ? and user2_id = ?)";
+        String updateSQL = "update friendships set status = ? where (user1_id = ? and user2_id = ?) or (user1_id = ? and user2_id = ?)";
         try{
             Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
             PreparedStatement statement = connection.prepareStatement(updateSQL);
             statement.setString(1, friendship.getStatus());
             statement.setLong(2, friendship.getId().getE1());
             statement.setLong(3, friendship.getId().getE2());
+            statement.setLong(4, friendship.getId().getE2());
+            statement.setLong(5, friendship.getId().getE1());
             int response = statement.executeUpdate();
             return response == 0 ? Optional.empty() : Optional.of(friendship);
         } catch (SQLException SQLError) {

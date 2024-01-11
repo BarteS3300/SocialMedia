@@ -18,6 +18,10 @@ public class Friendship extends Entity<Tuple<Long, Long>>{
         friendsFrom = localDateTime;
     }
 
+    public Friendship(String status){
+        this.status = status;
+    }
+
     public Friendship(LocalDateTime localDateTime, String status) {
         friendsFrom = localDateTime;
         this.status = status;

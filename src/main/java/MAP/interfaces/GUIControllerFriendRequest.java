@@ -14,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class GUIControllerFriendRequest {
 
@@ -21,7 +22,7 @@ public class GUIControllerFriendRequest {
 
     private UserService service;
 
-    private GUIControllerUser guiController;
+    private GUIControllerUser controller;
 
     @FXML
     private Button AcceptButton;
@@ -43,31 +44,31 @@ public class GUIControllerFriendRequest {
     void setData(User user, UserService service, GUIControllerUser guiController){
         this.user = user;
         this.service = service;
-        this.guiController = guiController;
-        //update();
+        this.controller = guiController;
+        loadList();
     }
 
-//    void loadList(){
-//        try {
-//            List<Friendship> list = service.getFriendRequests();
-//            friendRequests.setAll(list);
-//            friendRequestList.setItems(friendRequests);
-//        } catch (RepositoryException | ServiceException e) {
-//            errorLabel.setText("Error: \n" + e.getMessage());
-//        }
-//    }
+    void loadList(){
+        List<Friendship> list = service.getFriendRequests().stream()
+                .filter(x->x.getId().getE2().equals(user.getId()))
+                .collect(Collectors.toList());
+        friendRequests.setAll(list);
+        friendRequestList.setItems(friendRequests);
+    }
 
 
     @FXML
-    void AcceptButton(ActionEvent event) {
+    void AcceptButton() {
         if(friendRequestList.getSelectionModel().getSelectedItem() != null){
             Friendship friendship = friendRequestList.getSelectionModel().getSelectedItem();
             try {
                 errorLabel.setText("");
-                service.deleteFriendship(service.findOneUser(friendship.getId().getE1()).getUsername(), service.findOneUser(friendship.getId().getE2()).getUsername());
-                //update();
+                service.acceptFriendship(service.findOneUser(friendship.getId().getE1()).getUsername(), service.findOneUser(friendship.getId().getE2()).getUsername());
+                controller.loadList();
+                loadList();
             } catch (RepositoryException | ServiceException e) {
                 errorLabel.setText("Error: \n" + e.getMessage());
+                System.out.println(e.getMessage());
             }
         }
         else{
@@ -76,13 +77,12 @@ public class GUIControllerFriendRequest {
     }
 
     @FXML
-    void CloseButton(ActionEvent event) {
+    protected void RefuseButton() {
 
     }
 
     @FXML
-    void RefuseButton(ActionEvent event) {
+    protected void CloseButton() {
 
     }
-
 }

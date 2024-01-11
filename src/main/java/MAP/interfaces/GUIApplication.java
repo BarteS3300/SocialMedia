@@ -2,6 +2,7 @@ package MAP.interfaces;
 
 import MAP.business.UserService;
 import MAP.repository.FriendshipDBRepository;
+import MAP.repository.MessageDBRepository;
 import MAP.repository.UserDBRepository;
 import MAP.validators.FriendshipValidator;
 import MAP.validators.UserValidation;
@@ -22,7 +23,8 @@ public class GUIApplication extends Application {
         //InMemoryRepository<Long, User> repo = new InMemoryRepository<>(validation);
         UserDBRepository repoUsers = new UserDBRepository(userValidation, "jdbc:postgresql://localhost:5432/SocialNetwork_v2", "postgres", "postgres");
         FriendshipDBRepository repoFriendships = new FriendshipDBRepository(friendshipValidation, "jdbc:postgresql://localhost:5432/SocialNetwork_v2", "postgres", "postgres");
-        UserService service = new UserService(repoUsers, repoFriendships);
+        MessageDBRepository repoMessages = new MessageDBRepository("jdbc:postgresql://localhost:5432/SocialNetwork_v2", "postgres", "postgres");
+        UserService service = new UserService(repoUsers, repoFriendships, repoMessages);
 
         FXMLLoader fxmlLoader = new FXMLLoader(GUIApplication.class.getResource("Login.fxml"));
         Parent root = fxmlLoader.load();

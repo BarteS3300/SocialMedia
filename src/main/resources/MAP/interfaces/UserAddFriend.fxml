@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="216.0" prefWidth="315.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MAP.interfaces.GUIControllerUserAddFriend">
+   <children>
+      <Label layoutX="45.0" layoutY="83.0" text="Username:">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <TextField fx:id="username" layoutX="139.0" layoutY="83.0" />
+      <Button fx:id="AddButton" layoutX="191.0" layoutY="156.0" mnemonicParsing="false" onAction="#AddButton" text="Add friend">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+      <Button fx:id="CancelButton" layoutX="111.0" layoutY="156.0" mnemonicParsing="false" onAction="#CancelButton" text="Cancel">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+      <Label fx:id="error" layoutX="31.0" layoutY="29.0" prefHeight="31.0" prefWidth="257.0">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

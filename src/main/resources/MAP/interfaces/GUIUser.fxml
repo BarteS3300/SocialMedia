@@ -19,8 +19,9 @@
          <children>
             <VBox alignment="CENTER" prefHeight="158.0" prefWidth="243.0" spacing="30.0">
                <children>
+                  <Button fx:id="AddFriend" mnemonicParsing="false" onAction="#AddFriend" prefHeight="30.0" prefWidth="110.0" text="Add Friend" />
                   <Button fx:id="FriendRequest" mnemonicParsing="false" onAction="#FriendRequest" prefHeight="30.0" prefWidth="110.0" text="Friend Requests" />
-                  <Button fx:id="Message" mnemonicParsing="false" onAction="#Message" prefHeight="30.0" prefWidth="110.0" text="Message" />
+                  <Button fx:id="Messages" mnemonicParsing="false" onAction="#Messages" prefHeight="30.0" prefWidth="110.0" text="Messages" />
                </children>
             </VBox>
             <VBox alignment="TOP_CENTER" prefHeight="246.0" prefWidth="245.0">
@@ -30,7 +31,7 @@
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <ListView prefHeight="166.0" prefWidth="209.0" />
+                  <ListView fx:id="friendsList" prefHeight="166.0" prefWidth="209.0" />
                </children>
             </VBox>
          </children>

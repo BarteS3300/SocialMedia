@@ -5,27 +5,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d8c08afe-8212-4bcc-ab74-2775ae916032" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIControllerFriendRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIControllerLogin.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIControllerUser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/MAP/interfaces/AddFriendWindow.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/MAP/interfaces/FriendRequestWindow.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/MAP/interfaces/GUIUser.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/MAP/interfaces/Login.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/MAP/domain/Message.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIControllerMessage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIControllerNewMessage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIControllerUserAddFriend.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/MAP/repository/MessageDBRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/MAP/to_do" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/MAP/interfaces/MessageWindow.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/MAP/interfaces/NewMessageWindow.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/MAP/interfaces/UserAddFriend.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/MAP/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MAP/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/MAP/business/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MAP/business/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/MAP/domain/Friendship.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MAP/domain/Friendship.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/MAP/domain/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MAP/domain/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIControllerAdmin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIControllerAddFriendship.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIControllerAddFriendship.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIControllerAddUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIControllerAddUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIControllerUpdateUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIControllerUpdateUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIControllerFriendRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIControllerFriendRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIControllerUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIControllerUser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/MAP/repository/FriendshipDBRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MAP/repository/FriendshipDBRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/MAP/repository/UserDBRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MAP/repository/UserDBRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/MAP/interfaces/GUI.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/MAP/interfaces/GUI.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/MAP/interfaces/FriendRequestWindow.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/MAP/interfaces/FriendRequestWindow.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/MAP/interfaces/GUIUser.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/MAP/interfaces/GUIUser.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +65,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="31684525a62808afe83b3281427f1732f1be3c45" />
+        <entry key="$PROJECT_DIR$" value="d49b36d92d514f7958211fd3f8bd28a746455b1b" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -115,7 +116,7 @@
     </key>
   </component>
   <component name="RunManager" selected="Application.GUIApplication">
-    <configuration name="GUIApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+    <configuration name="GUIApplication" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="MAP.interfaces.GUIApplication" />
       <module name="SocialMedia.main" />
       <extension name="coverage">
@@ -141,8 +142,14 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.GUIApplication" />
+      <item itemvalue="Application.Main" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.GUIApplication" />
+        <item itemvalue="Application.Main" />
         <item itemvalue="Application.GUIApplication" />
         <item itemvalue="Application.Main" />
         <item itemvalue="Application.Main" />
@@ -172,6 +179,16 @@
       <workItem from="1701763841938" duration="620000" />
       <workItem from="1702249962491" duration="46378000" />
       <workItem from="1702361172490" duration="719000" />
+      <workItem from="1702929166754" duration="583000" />
+      <workItem from="1702948153398" duration="8565000" />
+      <workItem from="1702966524864" duration="5728000" />
+      <workItem from="1702972714843" duration="2105000" />
+      <workItem from="1703227631069" duration="13406000" />
+      <workItem from="1704459859032" duration="3829000" />
+      <workItem from="1704476510420" duration="20038000" />
+      <workItem from="1704627961743" duration="280000" />
+      <workItem from="1704740311573" duration="9060000" />
+      <workItem from="1704995557888" duration="1476000" />
     </task>
     <task id="LOCAL-00001" summary="v1">
       <option name="closed" value="true" />
