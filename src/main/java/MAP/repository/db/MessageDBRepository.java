@@ -1,13 +1,15 @@
-package MAP.repository;
+package MAP.repository.db;
 
 import MAP.domain.Message;
+import MAP.repository.Repository;
+import MAP.repository.RepositoryException;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class MessageDBRepository implements Repository<Long, Message>{
+public class MessageDBRepository implements Repository<Long, Message> {
 
     private String url;
 
@@ -31,7 +33,7 @@ public class MessageDBRepository implements Repository<Long, Message>{
             findOneStatement.setLong(1, id);
             ResultSet resultFindOne = findOneStatement.executeQuery();
             if(resultFindOne.next()){
-                Message message = new Message(null, null, resultFindOne.getString("message"), resultFindOne.getTimestamp("data").toLocalDateTime(), resultFindOne.getLong("reply"));
+                Message message = new Message(resultFindOne.getString("message"), resultFindOne.getTimestamp("data").toLocalDateTime(), (Long) resultFindOne.getObject("reply"));
                 message.setId(id);
                 PreparedStatement findOne2Statement = connection.prepareStatement(findOne2SQL);
                 findOne2Statement.setLong(1, id);
@@ -60,7 +62,7 @@ public class MessageDBRepository implements Repository<Long, Message>{
             PreparedStatement statement = connection.prepareStatement(getAllSQL);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                Message messageInfo = new Message(resultSet.getString("message"), resultSet.getTimestamp("data").toLocalDateTime(), resultSet.getLong("reply"));
+                Message messageInfo = new Message(resultSet.getString("message"), resultSet.getTimestamp("data").toLocalDateTime(), (Long) resultSet.getObject("reply"));
                 messageInfo.setId(resultSet.getLong("id"));
                 PreparedStatement statement1 = connection.prepareStatement(getAll2SQL);
                 statement1.setLong(1, resultSet.getLong("id"));
@@ -97,7 +99,6 @@ public class MessageDBRepository implements Repository<Long, Message>{
             while(resultSet.next())
             {
                 message.setId(resultSet.getLong(1));
-                System.out.println(message.getId());
             }
             PreparedStatement statement1 = connection.prepareStatement(insert2SQL);
             statement1.setLong(1, message.getId());
@@ -122,6 +123,20 @@ public class MessageDBRepository implements Repository<Long, Message>{
 
     @Override
     public Optional<Message> update(Message entity) {
-        return Optional.empty();
+        String updateSQL = "update message set message = ?, data = ?, reply = ? where id = ?";
+        try {
+            Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
+            PreparedStatement statement = connection.prepareStatement(updateSQL);
+            statement.setString(1, entity.getMessage());
+            statement.setTimestamp(2, Timestamp.valueOf(entity.getData()));
+            statement.setObject(3, entity.getReply());
+            statement.setLong(4, entity.getId());
+            int response = statement.executeUpdate();
+            if(response == 0)
+                return Optional.of(entity);
+            return Optional.empty();
+        } catch (SQLException SQLError) {
+            throw new RepositoryException("Database connection error!" + SQLError);
+        }
     }
 }

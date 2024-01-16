@@ -332,10 +332,10 @@ public class UserService{
         repoMessages.save(message);
     }
 
-    public void replyMessage(User user, Message mes, String text){
-        ArrayList<Long> to = new ArrayList<>();
-        to.add(mes.getFrom());
-        Message message = new Message(user.getId(), to, text, mes.getData(), mes.getId());
+    public void replyMessage(User user, List<User> toUser, String text, Long idMessageReplied){
+
+        Message replyMessage = new Message(user.getId(), toUser.stream().map(User::getId).collect(Collectors.toList()), text, idMessageReplied);
+        repoMessages.save(replyMessage);
     }
 
     public ArrayList<Message> oneMessagePerUser(User user){
@@ -375,6 +375,35 @@ public class UserService{
 //            }
         }
         return oneMessage;
+    }
+
+    public List<Message> getMessagesWith(User user, Long with_user_id){
+        ArrayList<Message> allMessages = getAllMessages(user);
+        ArrayList<Message> messagesWith = new ArrayList<>();
+        for(Message message : allMessages){
+            if(Objects.equals(message.getFrom(), user.getId()) && message.getTo().contains(with_user_id) || Objects.equals(message.getFrom(), with_user_id) && message.getTo().contains(user.getId()))
+                messagesWith.add(message);
+        }
+        messagesWith.sort(Comparator.comparing(Message::getData));
+        return messagesWith;
+    }
+
+    public Message findMessage(Long id){
+        Optional<Message> message = repoMessages.findOne(id);
+        if(message.isPresent())
+            return message.get();
+        throw new ServiceException("Message doesn't exist!");
+    }
+
+    public void updateMessage(Long id, String text){
+        Optional<Message> old = repoMessages.findOne(id);
+        if(old.isPresent()){
+            Message updated = old.get();
+            updated.setMessage(text);
+            repoMessages.update(updated);
+            return;
+        }
+        throw new ServiceException("Message doesn't exist!");
     }
 
     public List<Tuple<User, CheckBox>> getAllCheck(){

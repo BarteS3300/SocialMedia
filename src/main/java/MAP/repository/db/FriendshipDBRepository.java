@@ -1,8 +1,10 @@
-package MAP.repository;
+package MAP.repository.db;
 
 import MAP.business.ServiceException;
 import MAP.domain.Friendship;
 import MAP.domain.Tuple;
+import MAP.repository.Repository;
+import MAP.repository.RepositoryException;
 import MAP.validators.Validator;
 
 import java.sql.*;
@@ -10,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class FriendshipDBRepository implements Repository<Tuple<Long, Long>, Friendship>{
+public class FriendshipDBRepository implements Repository<Tuple<Long, Long>, Friendship> {
 
     private String url;
 

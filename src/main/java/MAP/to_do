@@ -1,9 +1,12 @@
-1. see messages
-2. reply to messages
-3. edit messages
+1. see messages X
+2. reply to messages X
+3. edit messages X
+4. delete messages...
 3. add pagination
 4. add hash passwords
+5. delete friends request
 ..............................
-5. add search
+Optional
+1. add search
+2. style
 ..............................
-6. style

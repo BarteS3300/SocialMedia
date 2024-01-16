@@ -1,4 +1,4 @@
-package MAP.repository;
+package MAP.repository.file;
 
 public class AbstractFileRepository {
 }

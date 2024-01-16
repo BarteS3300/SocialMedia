@@ -1,7 +1,8 @@
-package MAP.repository;
+package MAP.repository.memory;
 
 import MAP.domain.Entity;
 import MAP.domain.Friendship;
+import MAP.repository.Repository;
 import MAP.validators.Validator;
 
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Optional;
 
-public class InMemoryRepository<ID, E extends Entity<ID>> implements Repository<ID,E>{
+public class InMemoryRepository<ID, E extends Entity<ID>> implements Repository<ID,E> {
 
     private Validator<E> validator;
 

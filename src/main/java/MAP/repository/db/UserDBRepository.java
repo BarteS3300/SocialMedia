@@ -1,9 +1,11 @@
-package MAP.repository;
+package MAP.repository.db;
 
 import MAP.business.ServiceException;
 import MAP.domain.Friendship;
 import MAP.domain.Tuple;
 import MAP.domain.User;
+import MAP.repository.Repository;
+import MAP.repository.RepositoryException;
 import MAP.validators.Validator;
 
 import java.sql.*;
@@ -11,19 +13,19 @@ import java.util.*;
 
 public class UserDBRepository implements Repository<Long, User> {
 
-    private String url;
+    protected String url;
 
-    private String username;
+    protected String username;
 
-    private String password;
+    protected String password;
 
-    private Validator<User> validator;
+    protected Validator<User> validator;
 
     public UserDBRepository(Validator<User> validator, String url, String username, String password) {
         this.validator = validator;
         this.url = url;
         this.username = username;
-        this.password = username;
+        this.password = password;
     }
 
     public Optional<User> findOne(Long id) {

@@ -5,28 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d8c08afe-8212-4bcc-ab74-2775ae916032" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/MAP/domain/Message.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIControllerMessage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIControllerNewMessage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIControllerUserAddFriend.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/MAP/repository/MessageDBRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/MAP/to_do" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/MAP/interfaces/MessageWindow.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/MAP/interfaces/NewMessageWindow.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/MAP/interfaces/UserAddFriend.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/MAP/repository/db/UserDBPagingRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/MAP/repository/paging/Page.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/MAP/repository/paging/PageImplementation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/MAP/repository/paging/Pageable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/MAP/repository/paging/PageableImplementation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/MAP/repository/paging/PagingRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/MAP/interfaces/GUIAdmin.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/MAP/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MAP/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/MAP/business/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MAP/business/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/MAP/domain/Friendship.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MAP/domain/Friendship.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIControllerFriendRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIControllerFriendRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIControllerUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIControllerUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/MAP/repository/FriendshipDBRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MAP/repository/FriendshipDBRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/MAP/repository/UserDBRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MAP/repository/UserDBRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/MAP/interfaces/FriendRequestWindow.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/MAP/interfaces/FriendRequestWindow.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/MAP/interfaces/GUIUser.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/MAP/interfaces/GUIUser.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIControllerLogin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIControllerLogin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIControllerMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MAP/interfaces/GUIControllerMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/MAP/repository/AbstractFileRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MAP/repository/file/AbstractFileRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/MAP/repository/FriendshipDBRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MAP/repository/db/FriendshipDBRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/MAP/repository/InMemoryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MAP/repository/memory/InMemoryRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/MAP/repository/MessageDBRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MAP/repository/db/MessageDBRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/MAP/repository/UserDBRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MAP/repository/db/UserDBRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/MAP/to_do" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/MAP/to_do" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/MAP/interfaces/MessageWindow.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/MAP/interfaces/MessageWindow.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,8 +56,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="FxmlFile" />
         <option value="Class" />
+        <option value="FxmlFile" />
       </list>
     </option>
   </component>
@@ -84,30 +83,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/barte/IdeaProjects/lab7&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "C:/MAP/sem9",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "preferences.keymap",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;postgresql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\barte\IdeaProjects\SocialMedia\src\main\resources\MAP\interfaces" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\barte\IdeaProjects\SocialMedia\src\main\resources\MAP\interfaces" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
@@ -188,7 +190,15 @@
       <workItem from="1704476510420" duration="20038000" />
       <workItem from="1704627961743" duration="280000" />
       <workItem from="1704740311573" duration="9060000" />
-      <workItem from="1704995557888" duration="1476000" />
+      <workItem from="1704995557888" duration="5111000" />
+      <workItem from="1705064220732" duration="5763000" />
+      <workItem from="1705084590153" duration="583000" />
+      <workItem from="1705085966633" duration="328000" />
+      <workItem from="1705087407285" duration="1228000" />
+      <workItem from="1705097267203" duration="10128000" />
+      <workItem from="1705174401317" duration="309000" />
+      <workItem from="1705183720649" duration="95000" />
+      <workItem from="1705356053856" duration="5845000" />
     </task>
     <task id="LOCAL-00001" summary="v1">
       <option name="closed" value="true" />
@@ -262,7 +272,15 @@
       <option name="project" value="LOCAL" />
       <updated>1702352245606</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="v2.2">
+      <option name="closed" value="true" />
+      <created>1704997726499</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1704997726499</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -288,7 +306,8 @@
     <MESSAGE value="v1.7(Lab 7)" />
     <MESSAGE value="v1.9(Lab 7)" />
     <MESSAGE value="v2.0" />
-    <option name="LAST_COMMIT_MESSAGE" value="v2.0" />
+    <MESSAGE value="v2.2" />
+    <option name="LAST_COMMIT_MESSAGE" value="v2.2" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/SocialMedia$HelloApplication.ic" NAME="HelloApplication Coverage Results" MODIFIED="1701729106857" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">

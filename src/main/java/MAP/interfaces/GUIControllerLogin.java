@@ -4,13 +4,8 @@ package MAP.interfaces;
 import MAP.business.ServiceException;
 import MAP.business.UserService;
 import MAP.domain.User;
-import MAP.repository.FriendshipDBRepository;
 import MAP.repository.RepositoryException;
-import MAP.repository.UserDBRepository;
-import MAP.validators.FriendshipValidator;
-import MAP.validators.UserValidation;
 import MAP.validators.ValidationException;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -22,7 +17,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.security.AuthProvider;
 import java.util.Objects;
 
 public class GUIControllerLogin {

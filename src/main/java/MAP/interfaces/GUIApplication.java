@@ -1,9 +1,10 @@
 package MAP.interfaces;
 
 import MAP.business.UserService;
-import MAP.repository.FriendshipDBRepository;
-import MAP.repository.MessageDBRepository;
-import MAP.repository.UserDBRepository;
+import MAP.repository.db.FriendshipDBRepository;
+import MAP.repository.db.MessageDBRepository;
+import MAP.repository.db.UserDBPagingRepository;
+import MAP.repository.db.UserDBRepository;
 import MAP.validators.FriendshipValidator;
 import MAP.validators.UserValidation;
 import javafx.application.Application;
@@ -21,7 +22,7 @@ public class GUIApplication extends Application {
         UserValidation userValidation = new UserValidation();
         FriendshipValidator friendshipValidation = new FriendshipValidator();
         //InMemoryRepository<Long, User> repo = new InMemoryRepository<>(validation);
-        UserDBRepository repoUsers = new UserDBRepository(userValidation, "jdbc:postgresql://localhost:5432/SocialNetwork_v2", "postgres", "postgres");
+        UserDBPagingRepository repoUsers = new UserDBPagingRepository(userValidation, "jdbc:postgresql://localhost:5432/SocialNetwork_v2", "postgres", "postgres");
         FriendshipDBRepository repoFriendships = new FriendshipDBRepository(friendshipValidation, "jdbc:postgresql://localhost:5432/SocialNetwork_v2", "postgres", "postgres");
         MessageDBRepository repoMessages = new MessageDBRepository("jdbc:postgresql://localhost:5432/SocialNetwork_v2", "postgres", "postgres");
         UserService service = new UserService(repoUsers, repoFriendships, repoMessages);
